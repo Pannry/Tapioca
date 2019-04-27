@@ -46,6 +46,10 @@ type
     SpeedButton10: TSpeedButton;
     SpeedButton3: TSpeedButton;
     SpeedButton11: TSpeedButton;
+    SpeedButton1: TSpeedButton;
+    procedure btnCardapioClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnLoginClick(Sender: TObject);
   private
     FAdmin: TAdminControle;
     FCliente: TClienteControle;
@@ -62,6 +66,40 @@ implementation
 { TODO : Botoes Administração e relatorio aparecem apenas para os admin }
 { TODO : exemplo de cardapios: https://aquilafastfood.com.br/cardapio/ }
 
+uses uCardapio, uCrud;
+
 {$R *.dfm}
+
+procedure TFrmPrincipal.btnCardapioClick(Sender: TObject);
+begin
+  frmCardapio := TfrmCardapio.Create(self);
+  try
+    frmCardapio.ShowModal;
+  finally
+    frmCardapio.Free;
+  end;
+end;
+
+procedure TFrmPrincipal.btnLoginClick(Sender: TObject);
+begin
+  frmCrud := TfrmCrud.Create(self);
+  try
+    frmCrud.InicialForm := 'login';
+    frmCrud.ShowModal;
+  finally
+    frmCrud.Free;
+  end;
+end;
+
+procedure TFrmPrincipal.SpeedButton1Click(Sender: TObject);
+begin
+  frmCrud := TfrmCrud.Create(self);
+  try
+    frmCrud.InicialForm := 'signup';
+    frmCrud.ShowModal;
+  finally
+    frmCrud.Free;
+  end;
+end;
 
 end.

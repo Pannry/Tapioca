@@ -7,7 +7,9 @@ uses
   UsuarioControle in 'Controles\UsuarioControle.pas',
   UusarioDao in 'DataAccess\UusarioDao.pas',
   Produto in 'Modelos\Produto.pas',
-  DM in 'DataAccess\DM.pas' {dmDB: TDataModule};
+  DM in 'DataAccess\DM.pas' {dmDB: TDataModule},
+  uCardapio in 'Visao\uCardapio.pas' {frmCardapio},
+  uCrud in 'Visao\uCrud.pas' {frmCrud};
 
 {$R *.res}
 
@@ -17,5 +19,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFrmPrincipal, FrmPrincipal);
   Application.CreateForm(TdmDB, dmDB);
+  Application.CreateForm(TfrmCardapio, frmCardapio);
+  Application.CreateForm(TfrmCrud, frmCrud);
   Application.Run;
 end.
