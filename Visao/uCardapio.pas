@@ -19,6 +19,7 @@ type
     Label4: TLabel;
     Panel3: TPanel;
     btnLogin: TSpeedButton;
+    Panel1: TPanel;
     procedure btnLoginClick(Sender: TObject);
   private
     { Private declarations }

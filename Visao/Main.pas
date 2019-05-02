@@ -3,7 +3,7 @@ unit Main;
 interface
 
 uses
-  UsuarioControle,
+  UsuarioControle, UsuarioLogadoSingleton,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
   Vcl.DBCGrids;
@@ -11,17 +11,6 @@ uses
 type
   TFrmPrincipal = class(TForm)
     Panel1: TPanel;
-    DBCtrlGrid1: TDBCtrlGrid;
-    Panel8: TPanel;
-    Shape2: TShape;
-    Shape5: TShape;
-    Shape3: TShape;
-    Label6: TLabel;
-    Label7: TLabel;
-    Label8: TLabel;
-    Shape6: TShape;
-    Label9: TLabel;
-    Label11: TLabel;
     Panel2: TPanel;
     Label1: TLabel;
     Panel6: TPanel;
@@ -38,22 +27,24 @@ type
     Label4: TLabel;
     Panel5: TPanel;
     Panel7: TPanel;
-    SpeedButton6: TSpeedButton;
-    SpeedButton7: TSpeedButton;
-    SpeedButton8: TSpeedButton;
-    SpeedButton9: TSpeedButton;
     Label5: TLabel;
-    SpeedButton10: TSpeedButton;
-    SpeedButton3: TSpeedButton;
-    SpeedButton11: TSpeedButton;
-    SpeedButton1: TSpeedButton;
+    btnShowCarrinho: TSpeedButton;
+    btnCadastro: TSpeedButton;
+    Label2: TLabel;
+    lblNomeUsuario: TLabel;
+    Edit1: TEdit;
+    SpeedButton2: TSpeedButton;
+    Panel8: TPanel;
+    Shape2: TShape;
+    DBCtrlGrid1: TDBCtrlGrid;
     procedure btnCardapioClick(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure btnCadastroClick(Sender: TObject);
     procedure btnLoginClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
   private
-    FAdmin: TAdminControle;
-    FCliente: TClienteControle;
-    { Private declarations }
+    FPermissao: Integer;
+    LogedUser: TUsuarioLogadoSingleton;
   public
     { Public declarations }
   end;
@@ -65,10 +56,35 @@ implementation
 
 { TODO : Botoes Administração e relatorio aparecem apenas para os admin }
 { TODO : exemplo de cardapios: https://aquilafastfood.com.br/cardapio/ }
+{ TODO : Criar uma variavel global nomeUsuario para identificar que existe um usuario logado }
+{ TODO : Usar panel como botao no ctrlGrid }
+{ TODO : Logout }
 
-uses uCardapio, uCrud;
+uses
+  uCardapio, uCrud;
 
 {$R *.dfm}
+
+procedure TFrmPrincipal.FormPaint(Sender: TObject);
+begin
+  if FPermissao = 1 then
+  begin
+    btnAdministracao.Visible := True;
+    btnRelatorios.Visible := True;
+  end
+  else
+  begin
+    btnAdministracao.Visible := False;
+    btnRelatorios.Visible := False;
+  end;
+end;
+
+procedure TFrmPrincipal.FormShow(Sender: TObject);
+begin
+  LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
+  lblNomeUsuario.Caption := LogedUser.Nome;
+  FPermissao := LogedUser.Permissao;
+end;
 
 procedure TFrmPrincipal.btnCardapioClick(Sender: TObject);
 begin
@@ -89,9 +105,11 @@ begin
   finally
     frmCrud.Free;
   end;
+  lblNomeUsuario.Caption := LogedUser.Nome;
+  FPermissao := LogedUser.Permissao;
 end;
 
-procedure TFrmPrincipal.SpeedButton1Click(Sender: TObject);
+procedure TFrmPrincipal.btnCadastroClick(Sender: TObject);
 begin
   frmCrud := TfrmCrud.Create(self);
   try
@@ -100,6 +118,8 @@ begin
   finally
     frmCrud.Free;
   end;
+  lblNomeUsuario.Caption := LogedUser.Nome;
+  FPermissao := LogedUser.Permissao;
 end;
 
 end.

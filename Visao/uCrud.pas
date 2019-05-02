@@ -1,3 +1,4 @@
+
 unit uCrud;
 
 interface
@@ -42,11 +43,16 @@ type
     Label4: TLabel;
     Image1: TImage;
     Image2: TImage;
+    lblfeedbackLogin: TLabel;
+    Label11: TLabel;
+    lblFeedbackCadastro: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btnCadastroLoginClick(Sender: TObject);
     procedure btnLoginCadastroClick(Sender: TObject);
     procedure btnClose2Click(Sender: TObject);
     procedure btnClose1Click(Sender: TObject);
+    procedure btnCadastroCadastroClick(Sender: TObject);
+    procedure btnLoginLoginClick(Sender: TObject);
   private
     FInicialForm: string;
   public
@@ -60,6 +66,8 @@ implementation
 
 {$R *.dfm}
 
+uses UsuarioControle, SystemUtils;
+
 
 procedure TfrmCrud.FormShow(Sender: TObject);
 var
@@ -72,6 +80,45 @@ begin
     pcCrud.ActivePage := tsLogin
   else
     pcCrud.ActivePage := tsCadastro;
+end;
+
+procedure TfrmCrud.btnCadastroCadastroClick(Sender: TObject);
+var
+  FClienteControle: TClienteControle;
+  Feedback: string;
+begin
+  FClienteControle := TClienteControle.Create;
+  try
+    FeedBack := FClienteControle.VerificarSeUsuarioUnico(edtCadastroNome.Text);
+
+    if Feedback.IsEmpty then
+    begin
+      Feedback := FClienteControle.CriarUsuario(edtCadastroNome.Text, edtCadastroSenha.Text);
+      SuccessMensage(lblfeedbackLogin, Feedback);
+      pcCrud.ActivePage := tsLogin;
+    end
+    else
+      FailMensage(lblFeedbackCadastro, Feedback);
+
+  finally
+    FClienteControle.Free;
+  end;
+end;
+
+procedure TfrmCrud.btnLoginLoginClick(Sender: TObject);
+var
+  Login: TClienteControle;
+  Feedback: string;
+begin
+  Login := TClienteControle.Create;
+  try
+    Feedback := Login.LogarUsuario(edtLoginNome.Text, edtLoginSenha.Text);
+    if Feedback.IsEmpty then
+      Close;
+  finally
+    login.Free;
+  end;
+  FailMensage(lblfeedbackLogin, Feedback);
 end;
 
 procedure TfrmCrud.btnCadastroLoginClick(Sender: TObject);

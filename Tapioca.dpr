@@ -9,7 +9,9 @@ uses
   Produto in 'Modelos\Produto.pas',
   DM in 'DataAccess\DM.pas' {dmDB: TDataModule},
   uCardapio in 'Visao\uCardapio.pas' {frmCardapio},
-  uCrud in 'Visao\uCrud.pas' {frmCrud};
+  uCrud in 'Visao\uCrud.pas' {frmCrud},
+  SystemUtils in 'Others\SystemUtils.pas',
+  UsuarioLogadoSingleton in 'Others\UsuarioLogadoSingleton.pas';
 
 {$R *.res}
 

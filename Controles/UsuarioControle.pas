@@ -9,9 +9,11 @@ type
   TUsuarioControle = class
   protected
     constructor Create; virtual; abstract;
-    destructor Destroy; override; abstract;
 
     function CriarUsuario(nome, senha:string): string; virtual; abstract;
+    function LogarUsuario(nome, senha:string): string; virtual; abstract;
+  public
+    destructor Destroy; override; abstract;
   end;
 
   TAdminControle = class(TUsuarioControle)
@@ -33,11 +35,16 @@ type
     constructor Create; override;
     destructor Destroy; override;
 
+    function VerificarSeUsuarioUnico(nome: string): string;
     function CriarUsuario(nome, senha:string): string; override;
+    function LogarUsuario(nome, senha:string): string; override;
   end;
 
 
 implementation
+
+uses
+  sysUtils;
 
 { TAdminControle }
 
@@ -75,10 +82,49 @@ begin
   inherited;
 end;
 
+function TClienteControle.VerificarSeUsuarioUnico(nome: string): string;
+var
+  fb: string;
+begin
+  FCliente.Nome := nome;
+
+  fb := FClienteDao.VerificarExistenciaUsuario(FCliente);
+  if fb.IsEmpty then
+    Result := fb
+  else
+    Result := 'Usuario Indisponivel!';
+end;
+
 function TClienteControle.CriarUsuario(nome, senha: string): string;
 begin
   FCliente.DefinirNome(nome, senha);
   Result := FClienteDao.SalvarUsuario(FCliente);
+end;
+
+function TClienteControle.LogarUsuario(nome, senha: string): string;
+var
+  fb: string;
+begin
+  FCliente.Nome := nome;
+
+  fb := FClienteDao.VerificarExistenciaUsuario(FCliente);
+  if fb.IsEmpty then
+  begin
+    Result := 'Usuario não existe!';
+    exit;
+  end;
+
+  FCliente.Senha := senha;
+
+  fb := FClienteDao.VerificarSenhaUsuario(FCliente);
+  if fb.IsEmpty then
+  begin
+    Result := 'Senha incorreta!';
+    exit;
+  end;
+
+  fb := FClienteDao.RealizarLogin(FCliente);
+  Result := fb;
 end;
 
 end.

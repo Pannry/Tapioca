@@ -26,6 +26,9 @@ type
     //FNome: string;
   public
     function SalvarUsuario(User: TUsuario): string; override;
+    function VerificarExistenciaUsuario(User: TUsuario): string;
+    function VerificarSenhaUsuario(User: TUsuario): string;
+    function RealizarLogin(User: TUsuario): string;
   end;
 
 implementation
@@ -33,7 +36,7 @@ implementation
 { TVendedorDao }
 
 uses
-  DM;
+  DM, UsuarioLogadoSingleton;
 
 function TAdminDao.SalvarUsuario(User: TUsuario): string;
 begin
@@ -59,6 +62,51 @@ begin
 
   dmDB.qrAdmin.ExecSQL;
   Result := 'Cliente cadastrado com sucesso!';
+end;
+
+function TClienteDao.VerificarExistenciaUsuario(User: TUsuario): string;
+begin
+  dmDB.qrAdmin.Close;
+
+  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIO WHERE NOME = :NomeSQL';
+  dmDB.qrAdmin.ParamByName('NomeSQL').AsString := User.Nome;
+
+  dmDB.qrAdmin.Open;
+
+  Result := dmDB.qrAdmin.FieldByName('NOME').AsString;
+end;
+
+function TClienteDao.VerificarSenhaUsuario(User: TUsuario): string;
+begin
+  dmDB.qrAdmin.Close;
+
+  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIO WHERE NOME = :NomeSQL and SENHA = :SenhaSQL';
+  dmDB.qrAdmin.ParamByName('NomeSQL').AsString := User.Nome;
+  dmDB.qrAdmin.ParamByName('SenhaSQL').AsString := User.Senha;
+  dmDB.qrAdmin.Open;
+
+  Result := dmDB.qrAdmin.FieldByName('NOME').AsString;
+end;
+
+function TClienteDao.RealizarLogin(User: TUsuario): string;
+var
+  LogedUser: TUsuarioLogadoSingleton;
+  nome: string;
+  permissao: Integer;
+begin
+  dmDB.qrAdmin.Close;
+
+  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIO WHERE NOME = :NomeSQL and SENHA = :SenhaSQL';
+  dmDB.qrAdmin.ParamByName('NomeSQL').AsString := User.Nome;
+  dmDB.qrAdmin.ParamByName('SenhaSQL').AsString := User.Senha;
+  dmDB.qrAdmin.Open;
+
+  nome := dmDB.qrAdmin.FieldByName('NOME').AsString;
+  permissao := dmDB.qrAdmin.FieldByName('TIPO').AsInteger;
+
+  LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
+  LogedUser.DefinirUsuario(nome, permissao);
+  Result := '';
 end;
 
 end.

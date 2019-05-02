@@ -102,7 +102,6 @@ object frmCardapio: TfrmCardapio
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1016
       object Label3: TLabel
         Left = 37
         Top = 24
@@ -144,7 +143,6 @@ object frmCardapio: TfrmCardapio
       Color = clBtnHighlight
       ParentBackground = False
       TabOrder = 2
-      ExplicitWidth = 1016
       object btnLogin: TSpeedButton
         Left = 553
         Top = 0
@@ -183,5 +181,13 @@ object frmCardapio: TfrmCardapio
         ExplicitTop = -3
       end
     end
+  end
+  object Panel1: TPanel
+    Left = 248
+    Top = 440
+    Width = 185
+    Height = 161
+    Caption = 'Panel1'
+    TabOrder = 1
   end
 end

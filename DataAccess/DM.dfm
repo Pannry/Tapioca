@@ -4,7 +4,9 @@ object dmDB: TdmDB
   Width = 958
   object ConDB: TFDConnection
     Params.Strings = (
-      'Database=C:\dados\BILLYAPS.FDB'
+      
+        'Database=C:\Users\thale\Documents\Thales\Projetos\delphi\Tapioca' +
+        '\dados\BILLYAPS.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'DriverID=FB')

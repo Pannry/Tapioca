@@ -96,7 +96,7 @@ object frmCrud: TfrmCrud
         end
         object Label6: TLabel
           Left = 48
-          Top = 62
+          Top = 75
           Width = 219
           Height = 29
           Caption = 'Realize seu cadastro'
@@ -115,6 +115,18 @@ object frmCrud: TfrmCrud
           Caption = 'Senha:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object lblFeedbackCadastro: TLabel
+          Left = 48
+          Top = 41
+          Width = 5
+          Height = 19
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
           Font.Height = -16
           Font.Name = 'Tahoma'
           Font.Style = []
@@ -190,12 +202,25 @@ object frmCrud: TfrmCrud
           Font.Style = []
           ParentFont = False
           TabOrder = 3
+          OnClick = btnCadastroCadastroClick
         end
       end
     end
     object tsLogin: TTabSheet
       Caption = 'Login'
       ImageIndex = 1
+      object Label11: TLabel
+        Left = 56
+        Top = 49
+        Width = 5
+        Height = 19
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -266,7 +291,7 @@ object frmCrud: TfrmCrud
         end
         object Label9: TLabel
           Left = 48
-          Top = 62
+          Top = 72
           Width = 152
           Height = 29
           Caption = 'Fa'#231'a seu login'
@@ -285,6 +310,18 @@ object frmCrud: TfrmCrud
           Caption = 'Senha:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object lblfeedbackLogin: TLabel
+          Left = 48
+          Top = 41
+          Width = 5
+          Height = 19
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
           Font.Height = -16
           Font.Name = 'Tahoma'
           Font.Style = []
@@ -360,6 +397,7 @@ object frmCrud: TfrmCrud
           Font.Style = []
           ParentFont = False
           TabOrder = 3
+          OnClick = btnLoginLoginClick
         end
       end
     end
@@ -374,7 +412,6 @@ object frmCrud: TfrmCrud
     Color = 4194304
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 8
     object Label1: TLabel
       Left = 56
       Top = 96
