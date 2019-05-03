@@ -14,15 +14,14 @@ object frmCardapio: TfrmCardapio
   Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
-  object ScrBoxCardapio: TScrollBox
+  object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 672
     Height = 537
     Align = alClient
-    BevelInner = bvNone
     BevelOuter = bvNone
-    BorderStyle = bsNone
+    Caption = 'Panel1'
     TabOrder = 0
     object Panel2: TPanel
       Left = 0
@@ -94,55 +93,18 @@ object frmCardapio: TfrmCardapio
         end
       end
     end
-    object Panel4: TPanel
-      Left = 0
-      Top = 82
-      Width = 672
-      Height = 89
-      Align = alTop
-      BevelOuter = bvNone
-      TabOrder = 1
-      object Label3: TLabel
-        Left = 37
-        Top = 24
-        Width = 203
-        Height = 24
-        Caption = 'Aplicativo das tapiocas'
-        Color = clBtnFace
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -20
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label4: TLabel
-        Left = 85
-        Top = 54
-        Width = 48
-        Height = 16
-        Caption = 'Principal'
-        Color = clBtnFace
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
-    end
     object Panel3: TPanel
       Left = 0
-      Top = 41
+      Top = 130
       Width = 672
       Height = 41
       Align = alTop
       BevelOuter = bvNone
       Color = clBtnHighlight
       ParentBackground = False
-      TabOrder = 2
+      TabOrder = 1
+      ExplicitLeft = 8
+      ExplicitTop = 158
       object btnLogin: TSpeedButton
         Left = 553
         Top = 0
@@ -181,13 +143,56 @@ object frmCardapio: TfrmCardapio
         ExplicitTop = -3
       end
     end
-  end
-  object Panel1: TPanel
-    Left = 248
-    Top = 440
-    Width = 185
-    Height = 161
-    Caption = 'Panel1'
-    TabOrder = 1
+    object Panel4: TPanel
+      Left = 0
+      Top = 41
+      Width = 672
+      Height = 89
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitTop = 0
+      object Label3: TLabel
+        Left = 37
+        Top = 24
+        Width = 203
+        Height = 24
+        Caption = 'Aplicativo das tapiocas'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -20
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label4: TLabel
+        Left = 85
+        Top = 54
+        Width = 48
+        Height = 16
+        Caption = 'Principal'
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object ScrBoxCardapio: TScrollBox
+      Left = 0
+      Top = 171
+      Width = 672
+      Height = 366
+      Align = alClient
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BorderStyle = bsNone
+      TabOrder = 3
+    end
   end
 end

@@ -38,6 +38,7 @@ type
     function VerificarSeUsuarioUnico(nome: string): string;
     function CriarUsuario(nome, senha:string): string; override;
     function LogarUsuario(nome, senha:string): string; override;
+    procedure LogoutUsuario;
   end;
 
 
@@ -125,6 +126,11 @@ begin
 
   fb := FClienteDao.RealizarLogin(FCliente);
   Result := fb;
+end;
+
+procedure TClienteControle.LogoutUsuario;
+begin
+  FClienteDao.RealizarLogout;
 end;
 
 end.

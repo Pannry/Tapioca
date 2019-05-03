@@ -209,6 +209,10 @@ object frmCrud: TfrmCrud
     object tsLogin: TTabSheet
       Caption = 'Login'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label11: TLabel
         Left = 56
         Top = 49

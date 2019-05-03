@@ -29,6 +29,7 @@ type
     function VerificarExistenciaUsuario(User: TUsuario): string;
     function VerificarSenhaUsuario(User: TUsuario): string;
     function RealizarLogin(User: TUsuario): string;
+    procedure RealizarLogout;
   end;
 
 implementation
@@ -107,6 +108,14 @@ begin
   LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
   LogedUser.DefinirUsuario(nome, permissao);
   Result := '';
+end;
+
+procedure TClienteDao.RealizarLogout;
+var
+  LogedUser: TUsuarioLogadoSingleton;
+begin
+  LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
+  LogedUser.DefinirUsuario;
 end;
 
 end.

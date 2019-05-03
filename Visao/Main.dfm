@@ -265,6 +265,7 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       Visible = False
+      OnClick = btnAdministracaoClick
       ExplicitLeft = 189
       ExplicitTop = 3
     end
@@ -527,7 +528,7 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     end
     object btnLogin: TSpeedButton
-      Left = 896
+      Left = 776
       Top = 0
       Width = 120
       Height = 41
@@ -563,7 +564,7 @@ object FrmPrincipal: TFrmPrincipal
       ExplicitLeft = 875
     end
     object btnCadastro: TSpeedButton
-      Left = 776
+      Left = 896
       Top = 0
       Width = 120
       Height = 41
@@ -596,7 +597,46 @@ object FrmPrincipal: TFrmPrincipal
         77778FFFFFFFFFFFFFFFFFFFFFFFF877778FFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = btnCadastroClick
-      ExplicitLeft = 734
+      ExplicitLeft = 920
+      ExplicitTop = 3
+    end
+    object btnLogout: TSpeedButton
+      Left = 656
+      Top = 0
+      Width = 120
+      Height = 41
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alRight
+      Caption = 'Logout'
+      Flat = True
+      Glyph.Data = {
+        76020000424D7602000000000000760000002800000020000000200000000100
+        04000000000000020000C40E0000C40E00001000000000000000000000000000
+        8000008000000080800080000000800080008080000080808000C0C0C0000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00FFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFF877778FFFFFFFFFFFFFFFFFFFFFFFF7777777778FFFFFFFFFFFFFFFFF
+        FFFF77778FF87777FFFFFFFFFFFFFFFFFFF777FFFFFFF8778FFFFFFFFFFFFFFF
+        FFF77FF8FFFF8FF77FFFFFFFFFFFFFFFFF878F877FF778F878FFFF77FFFFFFFF
+        FF778FF777777FF877FFFF77FFFFFFFFFF77FFFF7777FFFF77FFFF778FFFFFFF
+        FF77FFFF7777FFFF77FFFF877FFFFFFFFF778FF777777FF877FFFFF778FFFFFF
+        FF878F877FF778F878FFFFF8778FFFFFFFF77FF8FFFF8FF77FFFFFFF7778FFFF
+        FFF777FFFFFFF8777FFFFFFFF87778FFFF8777778FF87777FFFFFFFFFF877777
+        777777777777777FFFFFFFFFFFF8777777778FF877778FFFFFFFFFFFFF87778F
+        F87778FFFFFFFFFFFFFFFFFFFF778FFFFFF877FFFFFFFFFFFFFFFFFFF877FFFF
+        FFFF778FFFFFFFFFFFFFFFFFF778FFFFFFFF877FFFFFFFFFFFFFFFFFF77FFFFF
+        FFFFF77FFFFFFFFFFFFFFFFFF77FFFFFFFFFF77FFFFFFFFFFFFFFFFFF778FFFF
+        FFFF877FFFFFFFFFFFFFFFFFF877FFFFFFFF778FFFFFFFFFFFFFFFFFFF778FFF
+        FFF877FFFFFFFFFFFFFFFFFFFF87778FF87778FFFFFFFFFFFFFFFFFFFFF87777
+        77778FFFFFFFFFFFFFFFFFFFFFFFF877778FFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+      Visible = False
+      OnClick = btnLogoutClick
+      ExplicitLeft = 816
+      ExplicitTop = -3
     end
   end
   object Panel4: TPanel
@@ -638,30 +678,30 @@ object FrmPrincipal: TFrmPrincipal
       ParentFont = False
     end
     object Label2: TLabel
-      Left = 868
+      Left = 816
       Top = 6
-      Width = 52
-      Height = 16
+      Width = 84
+      Height = 25
       Caption = 'Usu'#225'rio: '
       Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -21
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentColor = False
       ParentFont = False
     end
     object lblNomeUsuario: TLabel
-      Left = 926
-      Top = 6
-      Width = 59
-      Height = 16
+      Left = 816
+      Top = 37
+      Width = 97
+      Height = 25
       Caption = 'Convidado'
       Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -21
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentColor = False

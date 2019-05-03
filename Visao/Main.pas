@@ -37,11 +37,14 @@ type
     Panel8: TPanel;
     Shape2: TShape;
     DBCtrlGrid1: TDBCtrlGrid;
+    btnLogout: TSpeedButton;
     procedure btnCardapioClick(Sender: TObject);
     procedure btnCadastroClick(Sender: TObject);
     procedure btnLoginClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormPaint(Sender: TObject);
+    procedure btnLogoutClick(Sender: TObject);
+    procedure btnAdministracaoClick(Sender: TObject);
   private
     FPermissao: Integer;
     LogedUser: TUsuarioLogadoSingleton;
@@ -54,14 +57,15 @@ var
 
 implementation
 
-{ TODO : Botoes Administração e relatorio aparecem apenas para os admin }
-{ TODO : exemplo de cardapios: https://aquilafastfood.com.br/cardapio/ }
-{ TODO : Criar uma variavel global nomeUsuario para identificar que existe um usuario logado }
-{ TODO : Usar panel como botao no ctrlGrid }
-{ TODO : Logout }
+{ TODO 0 -oThales -cCardapio: exemplo de cardapios: https://aquilafastfood.com.br/cardapio/ }
+{ TODO 2 -oThales -cProdutos : Adicionar tela especial de administrador}
+{ TODO 2 -oThales -cProdutos : Adicionar CRUD de produtos }
+{ TODO 2 -oThales -cProdutos : Adicionar CRUD de usuarios (adm's) }
+{ TODO 1 -oThales -cCarrinho : Adicionar um panel com scroll, apenas modificando a visibilidade }
+
 
 uses
-  uCardapio, uCrud;
+  uCardapio, uCrud, uAdm;
 
 {$R *.dfm}
 
@@ -76,6 +80,17 @@ begin
   begin
     btnAdministracao.Visible := False;
     btnRelatorios.Visible := False;
+  end;
+
+  if (FPermissao = 1) or (FPermissao = 2) then
+  begin
+    btnLogout.Visible := True;
+    btnLogin.Visible := False;
+  end
+  else
+  begin
+    btnLogout.Visible := False;
+    btnLogin.Visible := True;
   end;
 end;
 
@@ -107,6 +122,30 @@ begin
   end;
   lblNomeUsuario.Caption := LogedUser.Nome;
   FPermissao := LogedUser.Permissao;
+end;
+
+procedure TFrmPrincipal.btnLogoutClick(Sender: TObject);
+var
+  UserCtrl: TClienteControle;
+begin
+  UserCtrl := TClienteControle.Create;
+  try
+    UserCtrl.LogoutUsuario;
+    lblNomeUsuario.Caption := LogedUser.Nome;
+    FPermissao := LogedUser.Permissao;
+  finally
+    UserCtrl.Free;
+  end;
+end;
+
+procedure TFrmPrincipal.btnAdministracaoClick(Sender: TObject);
+begin
+  frmAdm := TfrmAdm.Create(self);
+  try
+    frmAdm.ShowModal;
+  finally
+    frmAdm.Free;
+  end;
 end;
 
 procedure TFrmPrincipal.btnCadastroClick(Sender: TObject);
