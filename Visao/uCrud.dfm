@@ -345,7 +345,7 @@ object frmCrud: TfrmCrud
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0
-          TextHint = 'Loign'
+          TextHint = 'Login'
         end
         object edtLoginSenha: TEdit
           Left = 64

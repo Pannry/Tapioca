@@ -132,6 +132,10 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
         end
       end
       inherited tsAba3: TTabSheet
+        ExplicitLeft = 4
+        ExplicitTop = 24
+        ExplicitWidth = 516
+        ExplicitHeight = 493
         inherited panelTabSheet3: TPanel
           inherited Label11: TLabel
             Width = 151
@@ -217,6 +221,10 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
         end
       end
       inherited tsAba4: TTabSheet
+        ExplicitLeft = 4
+        ExplicitTop = 24
+        ExplicitWidth = 516
+        ExplicitHeight = 493
         inherited panelTabSheet4: TPanel
           inherited Label12: TLabel
             Top = 22
@@ -309,7 +317,7 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
   inherited imPrincipal: TImageList
     Left = 24
     Bitmap = {
-      494C010105004000D00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010105004000D40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -587,7 +595,7 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
       '  NOME,'
       '  PRECO,'
       '  TIPO_PRODUTO,'
-      '  QUANTIDADE_ESTOQUE'
+      '  QUANTIDADE'
       'from '
       '  Produtos')
     object qrDadosID: TIntegerField

@@ -60,6 +60,9 @@ var
 implementation
 
 { TODO 0 -oThales -cCardapio: exemplo de cardapios: https://aquilafastfood.com.br/cardapio/ }
+
+{ TODO 0 -oThales -cCardapio: Refazer tela/BD de Produtos (O banco está oK) }
+
 { TODO 2 -oThales -cProdutos : Adicionar CRUD de produtos }
 { TODO 2 -oThales -cProdutos : Adicionar CRUD de usuarios (adm's) }
 { TODO 1 -oThales -cCarrinho : Adicionar um panel com scroll, apenas modificando a visibilidade }
