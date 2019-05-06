@@ -21,7 +21,7 @@ object frmCrud: TfrmCrud
     Top = 0
     Width = 377
     Height = 527
-    ActivePage = tsCadastro
+    ActivePage = tsLogin
     Align = alClient
     TabOrder = 0
     object tsCadastro: TTabSheet
@@ -84,9 +84,9 @@ object frmCrud: TfrmCrud
         object Label5: TLabel
           Left = 48
           Top = 132
-          Width = 48
+          Width = 45
           Height = 19
-          Caption = 'Nome:'
+          Caption = 'Login:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
@@ -132,7 +132,7 @@ object frmCrud: TfrmCrud
           Font.Style = []
           ParentFont = False
         end
-        object edtCadastroNome: TEdit
+        object edtCadastroLogin: TEdit
           Left = 64
           Top = 179
           Width = 233
@@ -150,7 +150,7 @@ object frmCrud: TfrmCrud
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0
-          TextHint = 'Nome'
+          TextHint = 'Login'
         end
         object edtCadastroSenha: TEdit
           Left = 64
@@ -209,10 +209,6 @@ object frmCrud: TfrmCrud
     object tsLogin: TTabSheet
       Caption = 'Login'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label11: TLabel
         Left = 56
         Top = 49
@@ -283,9 +279,9 @@ object frmCrud: TfrmCrud
         object Label8: TLabel
           Left = 48
           Top = 131
-          Width = 48
+          Width = 45
           Height = 19
-          Caption = 'Nome:'
+          Caption = 'Login:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
@@ -331,7 +327,7 @@ object frmCrud: TfrmCrud
           Font.Style = []
           ParentFont = False
         end
-        object edtLoginNome: TEdit
+        object edtLoginLogin: TEdit
           Left = 64
           Top = 178
           Width = 233
@@ -349,7 +345,7 @@ object frmCrud: TfrmCrud
           ParentBiDiMode = False
           ParentFont = False
           TabOrder = 0
-          TextHint = 'Nome'
+          TextHint = 'Loign'
         end
         object edtLoginSenha: TEdit
           Left = 64

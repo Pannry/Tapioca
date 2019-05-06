@@ -16,33 +16,39 @@ type
     imPrincipal: TImageList;
     Panel2: TPanel;
     pcPrincipal: TPageControl;
-    TabSheet1: TTabSheet;
+    tsAba1: TTabSheet;
     DBCtrlGrid1: TDBCtrlGrid;
     Panel3: TPanel;
     Shape1: TShape;
     Label2: TLabel;
-    Label3: TLabel;
+    lblNomeProduto: TLabel;
     Label4: TLabel;
-    Label5: TLabel;
+    lblPrecoProduto: TLabel;
     Label8: TLabel;
-    Label9: TLabel;
-    TabSheet2: TTabSheet;
+    lblQuantidadeProduto: TLabel;
+    tsAba2: TTabSheet;
     panelTabSheet2: TPanel;
     Label10: TLabel;
-    TabSheet3: TTabSheet;
+    tsAba3: TTabSheet;
     panelTabSheet3: TPanel;
     Label11: TLabel;
-    TabSheet4: TTabSheet;
+    tsAba4: TTabSheet;
     panelTabSheet4: TPanel;
     Label12: TLabel;
     SplitView1: TSplitView;
-    CategoryButtons1: TCategoryButtons;
+    cbMenu: TCategoryButtons;
     Panel1: TPanel;
     Label1: TLabel;
     SearchBox1: TSearchBox;
     qrDados: TFDQuery;
     dsDados: TDataSource;
+    Label3: TLabel;
+    lblIdProduto: TLabel;
     procedure FormShow(Sender: TObject);
+    procedure CategoryButtons1Categories0Items3Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items4Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items5Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items6Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -57,6 +63,30 @@ implementation
 {$R *.dfm}
 
 uses DM;
+
+procedure TfrmAdmCrudBase.CategoryButtons1Categories0Items3Click(
+  Sender: TObject);
+begin
+  pcPrincipal.ActivePage := tsAba1;
+end;
+
+procedure TfrmAdmCrudBase.CategoryButtons1Categories0Items4Click(
+  Sender: TObject);
+begin
+  pcPrincipal.ActivePage := tsAba2;
+end;
+
+procedure TfrmAdmCrudBase.CategoryButtons1Categories0Items5Click(
+  Sender: TObject);
+begin
+  pcPrincipal.ActivePage := tsAba3;
+end;
+
+procedure TfrmAdmCrudBase.CategoryButtons1Categories0Items6Click(
+  Sender: TObject);
+begin
+  pcPrincipal.ActivePage := tsAba4;
+end;
 
 procedure TfrmAdmCrudBase.FormShow(Sender: TObject);
 var

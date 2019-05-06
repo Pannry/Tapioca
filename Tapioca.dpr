@@ -14,7 +14,9 @@ uses
   UsuarioLogadoSingleton in 'Others\UsuarioLogadoSingleton.pas',
   uAdm in 'Visao\uAdm.pas' {frmAdm},
   uAdmCrudBase in 'Visao\uAdmCrudBase.pas' {frmAdmCrudBase},
-  uAdmCrudProdutos in 'Visao\uAdmCrudProdutos.pas' {frmAdmCrudProdutos};
+  uAdmCrudProdutos in 'Visao\uAdmCrudProdutos.pas' {frmAdmCrudProdutos},
+  ProdutoControle in 'Controles\ProdutoControle.pas',
+  ProdutoDao in 'DataAccess\ProdutoDao.pas';
 
 {$R *.res}
 
@@ -24,5 +26,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TdmDB, dmDB);
   Application.CreateForm(TFrmPrincipal, FrmPrincipal);
+  //Application.CreateForm(TfrmAdmCrudProdutos, frmAdmCrudProdutos);
   Application.Run;
 end.

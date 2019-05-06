@@ -136,15 +136,8 @@
             <Form>frmAdmCrudProdutos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <None Include="ModelSupport_Tapioca\Tapioca\default.txaPackage"/>
-        <None Include="ModelSupport_Tapioca\default.txaPackage"/>
-        <None Include="ModelSupport_Tapioca\Tapioca\default.txvpck"/>
-        <None Include="ModelSupport_Tapioca\default.txvpck"/>
-        <None Include="ModelSupport_Tapioca\Produto\default.txvpck"/>
-        <None Include="ModelSupport_Tapioca\Produto\default.txaPackage"/>
-        <None Include="ModelSupport_Tapioca\Main\default.txvpck"/>
-        <None Include="ModelSupport_Tapioca\Main\default.txaPackage"/>
-        <None Include="ModelSupport_Tapioca\Usuario\default.txvpck"/>
+        <DCCReference Include="Controles\ProdutoControle.pas"/>
+        <DCCReference Include="DataAccess\ProdutoDao.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -174,60 +167,6 @@
                 <DeployFile LocalName="Win32\Debug\Tapioca.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Tapioca.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\default.txaPackage" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\Main\default.txaPackage" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\Produto\default.txaPackage" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\default.txvpck" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\Produto\default.txvpck" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\Main\default.txvpck" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\Tapioca\default.txvpck" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\Tapioca\default.txaPackage" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="ModelSupport_Tapioca\Usuario\default.txvpck" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -651,7 +590,7 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
-            <ModelSupport>True</ModelSupport>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

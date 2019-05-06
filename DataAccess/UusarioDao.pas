@@ -7,25 +7,8 @@ uses
 
 type
   TUsuarioDao = class
-  protected
-    function SalvarUsuario(User: TUsuario): string; virtual; abstract;
-    //procedure CarregarUsuario(nome: string); abstract;
-  end;
-
-type
-  TAdminDao = class(TUsuarioDao)
-  private
-    //FNome: string;
   public
-    function SalvarUsuario(User: TUsuario): string; override;
-  end;
-
-type
-  TClienteDao = class(TUsuarioDao)
-  private
-    //FNome: string;
-  public
-    function SalvarUsuario(User: TUsuario): string; override;
+    function SalvarUsuario(User: TUsuario): string;
     function VerificarExistenciaUsuario(User: TUsuario): string;
     function VerificarSenhaUsuario(User: TUsuario): string;
     function RealizarLogin(User: TUsuario): string;
@@ -34,83 +17,74 @@ type
 
 implementation
 
-{ TVendedorDao }
+{ TUsuarioDao }
 
 uses
-  DM, UsuarioLogadoSingleton;
+  DM, UsuarioLogadoSingleton, SysUtils;
 
-function TAdminDao.SalvarUsuario(User: TUsuario): string;
+function TUsuarioDao.SalvarUsuario(User: TUsuario): string;
 begin
   dmDB.qrAdmin.Close;
 
-  dmDB.qrAdmin.SQL.Text := 'INSERT INTO USUARIO (TIPO, NOME, SENHA) values (1, :NomeSQL, :SenhaSQL)';
-  dmDB.qrAdmin.ParamByName('NomeSQL').AsString := User.Nome;
+  dmDB.qrAdmin.SQL.Text := 'INSERT INTO USUARIOS (TIPO, LOGIN, SENHA) values (:TipoSQL, :LoginSQL, :SenhaSQL)';
+  dmDB.qrAdmin.ParamByName('TipoSQL').AsString := IntToStr(User.TipoDeUsuario);
+  dmDB.qrAdmin.ParamByName('LoginSQL').AsString := User.Login;
   dmDB.qrAdmin.ParamByName('SenhaSQL').AsString := User.Senha;
 
   dmDB.qrAdmin.ExecSQL;
-  Result := 'Administrador cadastrado com sucesso!';
+  Result := 'Usuario cadastrado com sucesso!';
 end;
 
-{ TClienteDao }
-
-function TClienteDao.SalvarUsuario(User: TUsuario): string;
+function TUsuarioDao.VerificarExistenciaUsuario(User: TUsuario): string;
 begin
   dmDB.qrAdmin.Close;
 
-  dmDB.qrAdmin.SQL.Text := 'INSERT INTO USUARIO (TIPO, NOME, SENHA) values (2, :NomeSQL, :SenhaSQL)';
-  dmDB.qrAdmin.ParamByName('NomeSQL').AsString := User.Nome;
-  dmDB.qrAdmin.ParamByName('SenhaSQL').AsString := User.Senha;
-
-  dmDB.qrAdmin.ExecSQL;
-  Result := 'Cliente cadastrado com sucesso!';
-end;
-
-function TClienteDao.VerificarExistenciaUsuario(User: TUsuario): string;
-begin
-  dmDB.qrAdmin.Close;
-
-  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIO WHERE NOME = :NomeSQL';
-  dmDB.qrAdmin.ParamByName('NomeSQL').AsString := User.Nome;
+  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIOS WHERE LOGIN = :LoginSQL';
+  dmDB.qrAdmin.ParamByName('LoginSQL').AsString := User.Login;
 
   dmDB.qrAdmin.Open;
 
-  Result := dmDB.qrAdmin.FieldByName('NOME').AsString;
+  Result := dmDB.qrAdmin.FieldByName('LOGIN').AsString;
 end;
 
-function TClienteDao.VerificarSenhaUsuario(User: TUsuario): string;
+function TUsuarioDao.VerificarSenhaUsuario(User: TUsuario): string;
 begin
   dmDB.qrAdmin.Close;
 
-  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIO WHERE NOME = :NomeSQL and SENHA = :SenhaSQL';
-  dmDB.qrAdmin.ParamByName('NomeSQL').AsString := User.Nome;
+  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIOS WHERE LOGIN = :LoginSQL and SENHA = :SenhaSQL';
+  dmDB.qrAdmin.ParamByName('LoginSQL').AsString := User.Login;
   dmDB.qrAdmin.ParamByName('SenhaSQL').AsString := User.Senha;
   dmDB.qrAdmin.Open;
 
-  Result := dmDB.qrAdmin.FieldByName('NOME').AsString;
+  Result := dmDB.qrAdmin.FieldByName('LOGIN').AsString;
 end;
 
-function TClienteDao.RealizarLogin(User: TUsuario): string;
+function TUsuarioDao.RealizarLogin(User: TUsuario): string;
 var
   LogedUser: TUsuarioLogadoSingleton;
-  nome: string;
-  permissao: Integer;
+  login: string;
+  tipo: Integer;
 begin
-  dmDB.qrAdmin.Close;
+  try
+    dmDB.qrAdmin.Close;
 
-  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIO WHERE NOME = :NomeSQL and SENHA = :SenhaSQL';
-  dmDB.qrAdmin.ParamByName('NomeSQL').AsString := User.Nome;
-  dmDB.qrAdmin.ParamByName('SenhaSQL').AsString := User.Senha;
-  dmDB.qrAdmin.Open;
+    dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIOS WHERE LOGIN = :LoginSQL and SENHA = :SenhaSQL';
+    dmDB.qrAdmin.ParamByName('LoginSQL').AsString := User.Login;
+    dmDB.qrAdmin.ParamByName('SenhaSQL').AsString := User.Senha;
+    dmDB.qrAdmin.Open;
 
-  nome := dmDB.qrAdmin.FieldByName('NOME').AsString;
-  permissao := dmDB.qrAdmin.FieldByName('TIPO').AsInteger;
+    login := dmDB.qrAdmin.FieldByName('LOGIN').AsString;
+    tipo := dmDB.qrAdmin.FieldByName('TIPO').AsInteger;
 
-  LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
-  LogedUser.DefinirUsuario(nome, permissao);
-  Result := '';
+    LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
+    LogedUser.DefinirUsuario(login, tipo);
+    Result := '';
+  except
+    Result := 'Falha no login';
+  end;
 end;
 
-procedure TClienteDao.RealizarLogout;
+procedure TUsuarioDao.RealizarLogout;
 var
   LogedUser: TUsuarioLogadoSingleton;
 begin

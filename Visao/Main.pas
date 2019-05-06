@@ -38,6 +38,7 @@ type
     Shape2: TShape;
     DBCtrlGrid1: TDBCtrlGrid;
     btnLogout: TSpeedButton;
+    btnPerfil: TSpeedButton;
     procedure btnCardapioClick(Sender: TObject);
     procedure btnCadastroClick(Sender: TObject);
     procedure btnLoginClick(Sender: TObject);
@@ -45,6 +46,7 @@ type
     procedure FormPaint(Sender: TObject);
     procedure btnLogoutClick(Sender: TObject);
     procedure btnAdministracaoClick(Sender: TObject);
+    procedure btnPerfilClick(Sender: TObject);
   private
     FPermissao: Integer;
     LogedUser: TUsuarioLogadoSingleton;
@@ -58,11 +60,9 @@ var
 implementation
 
 { TODO 0 -oThales -cCardapio: exemplo de cardapios: https://aquilafastfood.com.br/cardapio/ }
-{ TODO 2 -oThales -cProdutos : Adicionar tela especial de administrador}
 { TODO 2 -oThales -cProdutos : Adicionar CRUD de produtos }
 { TODO 2 -oThales -cProdutos : Adicionar CRUD de usuarios (adm's) }
 { TODO 1 -oThales -cCarrinho : Adicionar um panel com scroll, apenas modificando a visibilidade }
-
 
 uses
   uCardapio, uCrud, uAdm;
@@ -71,7 +71,7 @@ uses
 
 procedure TFrmPrincipal.FormPaint(Sender: TObject);
 begin
-  if FPermissao = 1 then
+  if FPermissao = 2 then
   begin
     btnAdministracao.Visible := True;
     btnRelatorios.Visible := True;
@@ -97,7 +97,7 @@ end;
 procedure TFrmPrincipal.FormShow(Sender: TObject);
 begin
   LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
-  lblNomeUsuario.Caption := LogedUser.Nome;
+  lblNomeUsuario.Caption := LogedUser.Login;
   FPermissao := LogedUser.Permissao;
 end;
 
@@ -120,22 +120,27 @@ begin
   finally
     frmCrud.Free;
   end;
-  lblNomeUsuario.Caption := LogedUser.Nome;
+  lblNomeUsuario.Caption := LogedUser.Login;
   FPermissao := LogedUser.Permissao;
 end;
 
 procedure TFrmPrincipal.btnLogoutClick(Sender: TObject);
 var
-  UserCtrl: TClienteControle;
+  UserCtrl: TUsuarioControle;
 begin
-  UserCtrl := TClienteControle.Create;
+  UserCtrl := TUsuarioControle.Create;
   try
     UserCtrl.LogoutUsuario;
-    lblNomeUsuario.Caption := LogedUser.Nome;
+    lblNomeUsuario.Caption := LogedUser.Login;
     FPermissao := LogedUser.Permissao;
   finally
     UserCtrl.Free;
   end;
+end;
+
+procedure TFrmPrincipal.btnPerfilClick(Sender: TObject);
+begin
+  //
 end;
 
 procedure TFrmPrincipal.btnAdministracaoClick(Sender: TObject);
@@ -157,7 +162,7 @@ begin
   finally
     frmCrud.Free;
   end;
-  lblNomeUsuario.Caption := LogedUser.Nome;
+  lblNomeUsuario.Caption := LogedUser.Login;
   FPermissao := LogedUser.Permissao;
 end;
 

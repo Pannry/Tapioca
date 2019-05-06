@@ -7,78 +7,29 @@ type
   { Classe Usuario }
 
   TUsuario = class
-  private
-    //
   protected
     FNome: string;
     FSenha: string;
-    FEmail: string;
-
+    FLogin: string;
+    FCPF: Integer;
+    FTelefone: string;
+    FTipoDeUsuario: Integer;
   public
-    property Nome: string read FNome write FNome;
+    property Login: string read FLogin write FLogin;
     property Senha: string read FSenha write FSenha;
-    property Email: string read FEmail write FEmail;
+    property Nome: string read FNome write FNome;
+    property CPF: Integer read FCPF write FCPF;
+    property Telefone: string read FTelefone write FTelefone;
+    property TipoDeUsuario: Integer read FTipoDeUsuario write FTipoDeUsuario;
+    // procedure SolicitarNotificoes; virtual; abstract;
 
-    procedure DefinirNome(n, s: string); overload;
-    procedure ListarProdutos; virtual; abstract;
-  end;
+    // procedure ListarProdutos; virtual; abstract;   //not
 
-  { Classe Cliente }
 
-  TCliente = class(TUsuario)
-  private
-    // FMeuCarrinho: TCarrinho;
-
-  public
-    //  property Carrinho: TCarrinho read FMeuCarrinho write FMeuCarrinho;
-
-    procedure ListarProdutos; Override;
-    procedure AdicionarProdutoCarrinho(NomeProduto: string);
-  end;
-
-  { Classe Vendedor }
-
-  TAdmin = class(TUsuario)
-  private
-    //
-  public
-    procedure ListarProdutos; Override;
-    procedure ListarVendas;
   end;
 
 implementation
 
 { TUsuario }
-
-procedure TUsuario.DefinirNome(n, s: string);
-begin
-  { TODO : Ao criar um usuario sem os inputs, enviar uma mensagem de erro }
-  Nome := n;
-  Senha := s;
-end;
-
-{ TAdmin }
-
-procedure TAdmin.ListarProdutos;
-begin
-
-end;
-
-procedure TAdmin.ListarVendas;
-begin
-
-end;
-
-{ TCliente }
-
-procedure TCliente.AdicionarProdutoCarrinho(NomeProduto: string);
-begin
-
-end;
-
-procedure TCliente.ListarProdutos;
-begin
-
-end;
 
 end.

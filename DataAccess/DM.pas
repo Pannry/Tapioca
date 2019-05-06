@@ -14,6 +14,7 @@ type
   TdmDB = class(TDataModule)
     ConDB: TFDConnection;
     qrAdmin: TFDQuery;
+    qrProdutos: TFDQuery;
   private
     { Private declarations }
   public

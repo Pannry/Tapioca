@@ -19,7 +19,7 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
-    edtCadastroNome: TEdit;
+    edtCadastroLogin: TEdit;
     edtCadastroSenha: TEdit;
     btnCadastroLogin: TButton;
     btnCadastroCadastro: TButton;
@@ -31,7 +31,7 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
-    edtLoginNome: TEdit;
+    edtLoginLogin: TEdit;
     edtLoginSenha: TEdit;
     btnLoginCadastro: TButton;
     btnLoginLogin: TButton;
@@ -83,17 +83,19 @@ begin
 end;
 
 procedure TfrmCrud.btnCadastroCadastroClick(Sender: TObject);
+const
+  CLIENTE = 1;
 var
-  FClienteControle: TClienteControle;
+  FUsuarioControle: TUsuarioControle;
   Feedback: string;
 begin
-  FClienteControle := TClienteControle.Create;
+  FUsuarioControle := TUsuarioControle.Create;
   try
-    FeedBack := FClienteControle.VerificarSeUsuarioUnico(edtCadastroNome.Text);
+    FeedBack := FUsuarioControle.VerificarSeUsuarioUnico(edtCadastroLogin.Text);
 
     if Feedback.IsEmpty then
     begin
-      Feedback := FClienteControle.CriarUsuario(edtCadastroNome.Text, edtCadastroSenha.Text);
+      Feedback := FUsuarioControle.CriarUsuario(CLIENTE, edtCadastroLogin.Text, edtCadastroSenha.Text);
       SuccessMensage(lblfeedbackLogin, Feedback);
       pcCrud.ActivePage := tsLogin;
     end
@@ -101,18 +103,18 @@ begin
       FailMensage(lblFeedbackCadastro, Feedback);
 
   finally
-    FClienteControle.Free;
+    FUsuarioControle.Free;
   end;
 end;
 
 procedure TfrmCrud.btnLoginLoginClick(Sender: TObject);
 var
-  Login: TClienteControle;
+  Login: TUsuarioControle;
   Feedback: string;
 begin
-  Login := TClienteControle.Create;
+  Login := TUsuarioControle.Create;
   try
-    Feedback := Login.LogarUsuario(edtLoginNome.Text, edtLoginSenha.Text);
+    Feedback := Login.LogarUsuario(edtLoginLogin.Text, edtLoginSenha.Text);
     if Feedback.IsEmpty then
       Close;
   finally
@@ -123,11 +125,13 @@ end;
 
 procedure TfrmCrud.btnCadastroLoginClick(Sender: TObject);
 begin
+  LimparEdits(self);
   pcCrud.ActivePage := tsLogin;
 end;
 
 procedure TfrmCrud.btnLoginCadastroClick(Sender: TObject);
 begin
+  LimparEdits(self);
   pcCrud.ActivePage := tsCadastro;
 end;
 
