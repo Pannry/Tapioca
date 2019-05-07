@@ -13,6 +13,7 @@ object frmCrud: TfrmCrud
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -21,7 +22,7 @@ object frmCrud: TfrmCrud
     Top = 0
     Width = 377
     Height = 527
-    ActivePage = tsLogin
+    ActivePage = tsCadastro
     Align = alClient
     TabOrder = 0
     object tsCadastro: TTabSheet
@@ -186,7 +187,7 @@ object frmCrud: TfrmCrud
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 3
           OnClick = btnCadastroLoginClick
         end
         object btnCadastroCadastro: TButton
@@ -201,7 +202,7 @@ object frmCrud: TfrmCrud
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnCadastroCadastroClick
         end
       end
@@ -381,7 +382,7 @@ object frmCrud: TfrmCrud
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 3
           OnClick = btnLoginCadastroClick
         end
         object btnLoginLogin: TButton
@@ -396,7 +397,7 @@ object frmCrud: TfrmCrud
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btnLoginLoginClick
         end
       end

@@ -88,12 +88,14 @@ begin
   if (FPermissao = 1) or (FPermissao = 2) then
   begin
     btnLogout.Visible := True;
+    btnPerfil.Visible := True;
     btnLogin.Visible := False;
   end
   else
   begin
     btnLogout.Visible := False;
     btnLogin.Visible := True;
+    btnPerfil.Visible := False;
   end;
 end;
 

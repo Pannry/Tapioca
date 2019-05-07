@@ -13,9 +13,9 @@ type
   public
     constructor Create; virtual;
     destructor Destroy; override;
-    function CriarUsuario(tipo: Integer; login, senha:string): string;
-    function VerificarSeUsuarioUnico(login: string): string;
-    function LogarUsuario(login, senha: string): string;
+    function CriarUsuario(user: TUsuario): string;
+    function VerificarSeUsuarioUnico(user: TUsuario): string;
+    function LogarUsuario(user: TUsuario): string;
     procedure LogoutUsuario;
   end;
 
@@ -38,19 +38,17 @@ begin
   FUserDao.Free;
 end;
 
-function TUsuarioControle.CriarUsuario(tipo: Integer; login, senha: string): string;
+function TUsuarioControle.CriarUsuario(user: TUsuario): string;
 begin
-  FUser.TipoDeUsuario := tipo;
-  FUser.Login := login;
-  FUser.Senha := senha;
+  FUser := user;
   Result := FUserDao.SalvarUsuario(FUser);
 end;
 
-function TUsuarioControle.VerificarSeUsuarioUnico(login: string): string;
+function TUsuarioControle.VerificarSeUsuarioUnico(user: TUsuario): string;
 var
   fb: string;
 begin
-  FUser.Login := login;
+  FUser.Login := user.Login;
 
   fb := FUserDao.VerificarExistenciaUsuario(FUser);
   if fb.IsEmpty then
@@ -59,11 +57,11 @@ begin
     Result := 'Usuario Indisponivel!';
 end;
 
-function TUsuarioControle.LogarUsuario(login, senha: string): string;
+function TUsuarioControle.LogarUsuario(user: TUsuario): string;
 var
   fb: string;
 begin
-  FUser.Login := login;
+  FUser := user;
 
   fb := FUserDao.VerificarExistenciaUsuario(FUser);
   if fb.IsEmpty then
@@ -71,8 +69,6 @@ begin
     Result := 'Usuario não existe!';
     exit;
   end;
-
-  FUser.Senha := senha;
 
   fb := FUserDao.VerificarSenhaUsuario(FUser);
   if fb.IsEmpty then

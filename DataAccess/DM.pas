@@ -15,6 +15,7 @@ type
     ConDB: TFDConnection;
     qrAdmin: TFDQuery;
     qrProdutos: TFDQuery;
+    qrProdutosListar: TFDQuery;
   private
     { Private declarations }
   public

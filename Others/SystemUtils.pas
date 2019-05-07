@@ -28,6 +28,9 @@ var
   I: Integer;
 begin
   for i := 0 to Owner.ComponentCount - 1 do
+  begin
     if Owner.Components[i] is TEdit then TEdit(Owner.Components[i]).Clear;
+    if Owner.Components[i] is TMemo then TMemo(Owner.Components[i]).Clear;
+  end;
 end;
 end.

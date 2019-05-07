@@ -9,13 +9,13 @@ type
     FDescricao: string;
     FTipoProduto: Integer;
     FPreco: string;
-    FQTDEstoque: string;
+    FQTDEstoque: Integer;
   public
     property Nome: string read FNome write FNome;
     property Descricao: string read FDescricao write FDescricao;
     property TipoProduto: Integer read FTipoProduto write FTipoProduto;
     property Preco: string read FPreco write FPreco;
-    property QTDEstoque: string read FQTDEstoque write FQTDEstoque;
+    property QTDEstoque: Integer read FQTDEstoque write FQTDEstoque;
   end;
 
 type

@@ -10,6 +10,7 @@ object dmDB: TdmDB
       'User_Name=SYSDBA'
       'Password=masterkey'
       'DriverID=FB')
+    Connected = True
     LoginPrompt = False
     Left = 456
     Top = 40
@@ -23,9 +24,14 @@ object dmDB: TdmDB
   end
   object qrProdutos: TFDQuery
     Connection = ConDB
+    Left = 200
+    Top = 160
+  end
+  object qrProdutosListar: TFDQuery
+    Connection = ConDB
     SQL.Strings = (
-      'Select * from Produtos;')
-    Left = 152
-    Top = 104
+      '')
+    Left = 200
+    Top = 216
   end
 end

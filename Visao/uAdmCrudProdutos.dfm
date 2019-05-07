@@ -1,5 +1,6 @@
 inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
   Caption = 'CRUD de Produtos'
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object Label6: TLabel [0]
@@ -11,7 +12,8 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
   end
   inherited Panel2: TPanel
     inherited pcPrincipal: TPageControl
-      ActivePage = tsAba2
+      ExplicitLeft = -184
+      ExplicitTop = 520
       inherited tsAba1: TTabSheet
         ExplicitLeft = 4
         ExplicitTop = 24
@@ -21,6 +23,8 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
           Height = 493
           PanelBorder = gbRaised
           OnPaintPanel = DBCtrlGrid1PaintPanel
+          ExplicitLeft = -96
+          ExplicitTop = 3
           inherited Panel3: TPanel
             inherited Label8: TLabel
               Left = 304
@@ -67,47 +71,66 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
           end
           object Label7: TLabel
             Left = 16
-            Top = 72
+            Top = 92
             Width = 31
             Height = 13
             Caption = 'Nome:'
           end
           object Label9: TLabel
             Left = 16
-            Top = 128
+            Top = 252
             Width = 31
             Height = 13
             Caption = 'Pre'#231'o:'
           end
           object Label13: TLabel
             Left = 272
-            Top = 128
+            Top = 252
             Width = 24
             Height = 13
             Caption = 'Tipo:'
           end
+          object Label19: TLabel
+            Left = 16
+            Top = 138
+            Width = 46
+            Height = 13
+            Caption = 'Descri'#231#227'o'
+          end
+          object lblFbAddProd: TLabel
+            Left = 17
+            Top = 58
+            Width = 5
+            Height = 19
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -16
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
           object edtAddProdutoNome: TEdit
             Left = 16
-            Top = 91
+            Top = 111
             Width = 401
             Height = 21
             TabOrder = 0
           end
           object edtAddProdutoPreco: TEdit
             Left = 16
-            Top = 147
+            Top = 271
             Width = 121
             Height = 21
-            TabOrder = 1
+            TabOrder = 2
           end
           object cbAddProdutoTipo: TComboBox
             Left = 272
-            Top = 147
+            Top = 271
             Width = 145
             Height = 21
             Style = csDropDownList
             ItemIndex = 0
-            TabOrder = 2
+            TabOrder = 3
             Text = 'Comida'
             Items.Strings = (
               'Comida'
@@ -115,19 +138,28 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
           end
           object btnAddProdutoCadastrar: TButton
             Left = 345
-            Top = 220
+            Top = 344
             Width = 75
             Height = 25
             Caption = 'Cadastrar'
-            TabOrder = 3
+            TabOrder = 4
+            OnClick = btnAddProdutoCadastrarClick
           end
           object btnAddProdutoCancelar: TButton
             Left = 239
-            Top = 220
+            Top = 344
             Width = 75
             Height = 25
             Caption = 'Cancelar'
-            TabOrder = 4
+            TabOrder = 5
+            OnClick = cbMenuCategories0Items3Click
+          end
+          object mmDescricao: TMemo
+            Left = 17
+            Top = 157
+            Width = 400
+            Height = 89
+            TabOrder = 1
           end
         end
       end
@@ -137,6 +169,8 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
         ExplicitWidth = 516
         ExplicitHeight = 493
         inherited panelTabSheet3: TPanel
+          ExplicitLeft = 3
+          ExplicitTop = 8
           inherited Label11: TLabel
             Width = 151
             Caption = 'Editar produto'
@@ -144,79 +178,116 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
           end
           object Label14: TLabel
             Left = 16
-            Top = 60
+            Top = 101
             Width = 129
             Height = 13
             Caption = 'Escolha qual deseja editar:'
           end
-          object Label15: TLabel
+          object Label99: TLabel
             Left = 16
-            Top = 112
-            Width = 31
+            Top = 153
+            Width = 50
             Height = 13
-            Caption = 'Nome:'
+            Caption = 'Descri'#231#227'o:'
           end
           object Label16: TLabel
             Left = 16
-            Top = 168
+            Top = 252
             Width = 31
-            Height = 13
+            Height = 25
             Caption = 'Pre'#231'o:'
           end
           object Label18: TLabel
-            Left = 296
-            Top = 168
+            Left = 265
+            Top = 252
             Width = 56
-            Height = 13
+            Height = 25
             Caption = 'Quantidade'
           end
-          object Button1: TButton
-            Left = 353
-            Top = 251
+          object lblFbEditProd: TLabel
+            Left = 16
+            Top = 66
+            Width = 5
+            Height = 19
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -16
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label15: TLabel
+            Left = 265
+            Top = 101
+            Width = 24
+            Height = 13
+            Caption = 'Tipo:'
+          end
+          object btnEditarProdutoCadastrar: TButton
+            Left = 342
+            Top = 324
             Width = 75
             Height = 25
             Caption = 'Editar'
-            TabOrder = 0
+            TabOrder = 4
+            OnClick = btnEditarProdutoCadastrarClick
           end
           object Button2: TButton
-            Left = 247
-            Top = 251
+            Left = 246
+            Top = 324
             Width = 75
             Height = 25
             Caption = 'Cancelar'
+            TabOrder = 5
+            OnClick = cbMenuCategories0Items3Click
+          end
+          object mmEditDescProd: TDBMemo
+            Left = 16
+            Top = 172
+            Width = 401
+            Height = 70
+            DataField = 'DESCRICAO'
+            DataSource = dsDados
             TabOrder = 1
           end
-          object ComboBox1: TComboBox
+          object edtEditPriceProd: TDBEdit
             Left = 16
-            Top = 79
-            Width = 145
+            Top = 271
+            Width = 151
             Height = 21
-            Style = csDropDownList
+            DataField = 'PRECO'
+            DataSource = dsDados
             TabOrder = 2
-            Items.Strings = (
-              'Comida'
-              'Bebida')
           end
-          object Edit1: TEdit
-            Left = 16
-            Top = 131
-            Width = 401
+          object edtEditQtdProd: TDBEdit
+            Left = 265
+            Top = 271
+            Width = 152
             Height = 21
+            DataField = 'QUANTIDADE'
+            DataSource = dsDados
             TabOrder = 3
           end
-          object Edit2: TEdit
+          object LkCbEditProd: TDBLookupComboBox
             Left = 16
-            Top = 187
-            Width = 121
+            Top = 120
+            Width = 145
             Height = 21
-            TabOrder = 4
+            KeyField = 'ID'
+            ListField = 'NOME'
+            ListSource = dsDados
+            TabOrder = 0
           end
-          object Edit3: TEdit
-            Left = 296
-            Top = 187
-            Width = 121
+          object edtEditTypeProd: TDBEdit
+            Left = 265
+            Top = 120
+            Width = 152
             Height = 21
-            TabOrder = 5
+            DataField = 'TIPO_PRODUTO'
+            DataSource = dsDados
+            Enabled = False
+            ReadOnly = True
+            TabOrder = 6
           end
         end
       end
@@ -226,6 +297,8 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
         ExplicitWidth = 516
         ExplicitHeight = 493
         inherited panelTabSheet4: TPanel
+          ExplicitLeft = -16
+          ExplicitTop = 312
           inherited Label12: TLabel
             Top = 22
             Width = 185
@@ -235,18 +308,31 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
           end
           object Label17: TLabel
             Left = 16
-            Top = 72
-            Width = 141
+            Top = 93
+            Width = 132
             Height = 13
-            Caption = 'Escolha qual deseja remover:'
+            Caption = 'Escolha qual deseja excluir:'
           end
-          object Button3: TButton
+          object lblFbRemProd: TLabel
+            Left = 16
+            Top = 62
+            Width = 5
+            Height = 19
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -16
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
+          object btnRemoverProdutoCadastrar: TButton
             Left = 121
             Top = 146
             Width = 75
             Height = 25
             Caption = 'Remover'
-            TabOrder = 0
+            TabOrder = 1
+            OnClick = btnRemoverProdutoCadastrarClick
           end
           object Button4: TButton
             Left = 15
@@ -254,15 +340,18 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
             Width = 75
             Height = 25
             Caption = 'Cancelar'
-            TabOrder = 1
+            TabOrder = 2
+            OnClick = cbMenuCategories0Items3Click
           end
-          object ComboBox2: TComboBox
+          object lkCbRemProd: TDBLookupComboBox
             Left = 16
-            Top = 91
+            Top = 112
             Width = 180
             Height = 21
-            Style = csDropDownList
-            TabOrder = 2
+            KeyField = 'ID'
+            ListField = 'NOME'
+            ListSource = dsDados
+            TabOrder = 0
           end
         end
       end
@@ -317,7 +406,7 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
   inherited imPrincipal: TImageList
     Left = 24
     Bitmap = {
-      494C010105004000D40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010105004000F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -589,15 +678,6 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
       000000000000}
   end
   inherited qrDados: TFDQuery
-    SQL.Strings = (
-      'Select  '
-      '  ID,'
-      '  NOME,'
-      '  PRECO,'
-      '  TIPO_PRODUTO,'
-      '  QUANTIDADE'
-      'from '
-      '  Produtos')
     object qrDadosID: TIntegerField
       FieldName = 'ID'
       Origin = 'ID'
@@ -608,51 +688,29 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
       FieldName = 'NOME'
       Origin = 'NOME'
       Required = True
-      Size = 50
+      Size = 100
     end
-    object qrDadosPRECO: TCurrencyField
-      FieldName = 'PRECO'
-      Origin = 'PRECO'
-      Required = True
-    end
-    object qrDadosQUANTIDADE_ESTOQUE: TIntegerField
-      FieldName = 'QUANTIDADE_ESTOQUE'
-      Origin = 'QUANTIDADE_ESTOQUE'
-      Required = True
+    object qrDadosDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Origin = 'DESCRICAO'
+      Size = 1000
     end
     object qrDadosTIPO_PRODUTO: TIntegerField
       FieldName = 'TIPO_PRODUTO'
       Origin = 'TIPO_PRODUTO'
       Required = True
     end
-    object qrDadosTIPO_PRODUTO_LK: TStringField
-      FieldKind = fkLookup
-      FieldName = 'TIPO_PRODUTO_LK'
-      LookupDataSet = qrTipoCalc
-      LookupKeyFields = 'ID'
-      LookupResultField = 'TIPO_PRODUTO'
-      KeyFields = 'TIPO_PRODUTO'
-      Size = 30
-      Lookup = True
-    end
-  end
-  object qrTipoCalc: TFDQuery
-    Connection = dmDB.ConDB
-    SQL.Strings = (
-      'select * from TIPO_PRODUTO;')
-    Left = 152
-    Top = 472
-    object qrTipoCalcID: TIntegerField
-      FieldName = 'ID'
-      Origin = 'ID'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    object qrDadosPRECO: TBCDField
+      FieldName = 'PRECO'
+      Origin = 'PRECO'
       Required = True
+      Precision = 18
+      Size = 2
     end
-    object qrTipoCalcTIPO_PRODUTO: TStringField
-      FieldName = 'TIPO_PRODUTO'
-      Origin = 'TIPO_PRODUTO'
+    object qrDadosQUANTIDADE: TIntegerField
+      FieldName = 'QUANTIDADE'
+      Origin = 'QUANTIDADE'
       Required = True
-      Size = 50
     end
   end
 end

@@ -4,6 +4,7 @@ unit uCrud;
 interface
 
 uses
+  UsuarioControle, Usuario,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
   Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls;
@@ -53,8 +54,11 @@ type
     procedure btnClose1Click(Sender: TObject);
     procedure btnCadastroCadastroClick(Sender: TObject);
     procedure btnLoginLoginClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FInicialForm: string;
+    FUser: TUsuario;
+    FUserControle: TUsuarioControle;
   public
     property InicialForm: string read FInicialForm write FInicialForm;
   end;
@@ -66,13 +70,16 @@ implementation
 
 {$R *.dfm}
 
-uses UsuarioControle, SystemUtils;
-
+uses
+  SystemUtils;
 
 procedure TfrmCrud.FormShow(Sender: TObject);
 var
   I: Integer;
 begin
+  FUserControle := TUsuarioControle.Create;
+  FUser := TUsuario.Create;
+
   for I := 0 to pcCrud.PageCount - 1 do
     pcCrud.Pages[I].TabVisible := false;
 
@@ -82,44 +89,45 @@ begin
     pcCrud.ActivePage := tsCadastro;
 end;
 
+procedure TfrmCrud.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FUserControle.Free;
+  FUser.Free;
+end;
+
 procedure TfrmCrud.btnCadastroCadastroClick(Sender: TObject);
 const
   CLIENTE = 1;
 var
-  FUsuarioControle: TUsuarioControle;
   Feedback: string;
 begin
-  FUsuarioControle := TUsuarioControle.Create;
-  try
-    FeedBack := FUsuarioControle.VerificarSeUsuarioUnico(edtCadastroLogin.Text);
+  FUser.Login := edtCadastroLogin.Text;
+  FUser.Senha := edtCadastroSenha.Text;
+  FUser.TipoDeUsuario := CLIENTE;
 
-    if Feedback.IsEmpty then
-    begin
-      Feedback := FUsuarioControle.CriarUsuario(CLIENTE, edtCadastroLogin.Text, edtCadastroSenha.Text);
-      SuccessMensage(lblfeedbackLogin, Feedback);
-      pcCrud.ActivePage := tsLogin;
-    end
-    else
-      FailMensage(lblFeedbackCadastro, Feedback);
+  FeedBack := FUserControle.VerificarSeUsuarioUnico(FUser);
 
-  finally
-    FUsuarioControle.Free;
-  end;
+  if Feedback.IsEmpty then
+  begin
+    Feedback := FUserControle.CriarUsuario(FUser);
+    SuccessMensage(lblfeedbackLogin, Feedback);
+    pcCrud.ActivePage := tsLogin;
+  end
+  else
+    FailMensage(lblFeedbackCadastro, Feedback);
 end;
 
 procedure TfrmCrud.btnLoginLoginClick(Sender: TObject);
 var
-  Login: TUsuarioControle;
   Feedback: string;
 begin
-  Login := TUsuarioControle.Create;
-  try
-    Feedback := Login.LogarUsuario(edtLoginLogin.Text, edtLoginSenha.Text);
-    if Feedback.IsEmpty then
-      Close;
-  finally
-    login.Free;
-  end;
+  FUser.Login := edtLoginLogin.Text;
+  FUser.Senha := edtLoginSenha.Text;
+
+  Feedback := FUserControle.LogarUsuario(FUser);
+  if Feedback.IsEmpty then
+    Close;
+
   FailMensage(lblfeedbackLogin, Feedback);
 end;
 
