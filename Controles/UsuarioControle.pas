@@ -40,7 +40,8 @@ end;
 
 function TUsuarioControle.CriarUsuario(user: TUsuario): string;
 begin
-  FUser := user;
+  FUser.Login := user.Login;
+  FUser.Senha := user.Senha;
   Result := FUserDao.SalvarUsuario(FUser);
 end;
 
@@ -61,7 +62,8 @@ function TUsuarioControle.LogarUsuario(user: TUsuario): string;
 var
   fb: string;
 begin
-  FUser := user;
+  FUser.Login := user.Login;
+  FUser.Senha := user.Senha;
 
   fb := FUserDao.VerificarExistenciaUsuario(FUser);
   if fb.IsEmpty then
