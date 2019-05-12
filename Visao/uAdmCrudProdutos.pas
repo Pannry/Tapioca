@@ -52,6 +52,10 @@ type
     Label17: TLabel;
     lblFbRemProd: TLabel;
     lkCbRemProd: TDBLookupComboBox;
+    lblIdProduto: TLabel;
+    lblQuantidadeProduto: TLabel;
+    lblNomeProduto: TLabel;
+    lblPrecoProduto: TLabel;
     procedure CategoryButtons1Categories0Items0Click(Sender: TObject);
     procedure cbMenuCategories0Items3Click(Sender: TObject);
     procedure cbMenuCategories0Items4Click(Sender: TObject);
@@ -93,13 +97,6 @@ begin
   qrDados := TProdutoControle.ListarProduto;
   dsDados.DataSet := qrDados;
   DBCtrlGrid1PaintPanel(DBCtrlGrid1, DBCtrlGrid1.PanelIndex);
-end;
-
-procedure TfrmAdmCrudProdutos.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  Prod.Free;
-  ProdControl.Free;
-  inherited;
 end;
 
 procedure TfrmAdmCrudProdutos.CategoryButtons1Categories0Items0Click(Sender: TObject);
@@ -201,6 +198,13 @@ begin
   SuccessMensage(lblFbRemProd, fb);
   LimparEdits(self);
   qrDados.Refresh;
+end;
+
+procedure TfrmAdmCrudProdutos.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Prod.Free;
+  ProdControl.Free;
+  inherited;
 end;
 
 end.

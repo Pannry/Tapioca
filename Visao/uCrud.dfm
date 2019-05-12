@@ -27,6 +27,10 @@ object frmCrud: TfrmCrud
     TabOrder = 0
     object tsCadastro: TTabSheet
       Caption = 'Cadastro'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pnlCrud: TPanel
         Left = 0
         Top = 0
@@ -210,6 +214,10 @@ object frmCrud: TfrmCrud
     object tsLogin: TTabSheet
       Caption = 'Login'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label11: TLabel
         Left = 56
         Top = 49

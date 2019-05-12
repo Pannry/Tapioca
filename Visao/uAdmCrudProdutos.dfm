@@ -12,19 +12,10 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
   end
   inherited Panel2: TPanel
     inherited pcPrincipal: TPageControl
-      ExplicitLeft = -184
-      ExplicitTop = 520
+      ActivePage = tsAba4
       inherited tsAba1: TTabSheet
-        ExplicitLeft = 4
-        ExplicitTop = 24
-        ExplicitWidth = 516
-        ExplicitHeight = 493
         inherited DBCtrlGrid1: TDBCtrlGrid
-          Height = 493
-          PanelBorder = gbRaised
           OnPaintPanel = DBCtrlGrid1PaintPanel
-          ExplicitLeft = -96
-          ExplicitTop = 3
           inherited Panel3: TPanel
             inherited Label8: TLabel
               Left = 304
@@ -55,14 +46,58 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
               Font.Style = []
               ParentFont = False
             end
+            object lblIdProduto: TLabel
+              Left = 37
+              Top = 43
+              Width = 5
+              Height = 19
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object lblQuantidadeProduto: TLabel
+              Left = 420
+              Top = 43
+              Width = 5
+              Height = 19
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object lblNomeProduto: TLabel
+              Left = 88
+              Top = 8
+              Width = 5
+              Height = 19
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object lblPrecoProduto: TLabel
+              Left = 176
+              Top = 43
+              Width = 5
+              Height = 19
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
           end
         end
       end
       inherited tsAba2: TTabSheet
-        ExplicitLeft = 4
-        ExplicitTop = 24
-        ExplicitWidth = 516
-        ExplicitHeight = 493
         inherited panelTabSheet2: TPanel
           inherited Label10: TLabel
             Width = 186
@@ -164,13 +199,7 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
         end
       end
       inherited tsAba3: TTabSheet
-        ExplicitLeft = 4
-        ExplicitTop = 24
-        ExplicitWidth = 516
-        ExplicitHeight = 493
         inherited panelTabSheet3: TPanel
-          ExplicitLeft = 3
-          ExplicitTop = 8
           inherited Label11: TLabel
             Width = 151
             Caption = 'Editar produto'
@@ -194,14 +223,14 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
             Left = 16
             Top = 252
             Width = 31
-            Height = 25
+            Height = 13
             Caption = 'Pre'#231'o:'
           end
           object Label18: TLabel
             Left = 265
             Top = 252
             Width = 56
-            Height = 25
+            Height = 13
             Caption = 'Quantidade'
           end
           object lblFbEditProd: TLabel
@@ -292,13 +321,7 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
         end
       end
       inherited tsAba4: TTabSheet
-        ExplicitLeft = 4
-        ExplicitTop = 24
-        ExplicitWidth = 516
-        ExplicitHeight = 493
         inherited panelTabSheet4: TPanel
-          ExplicitLeft = -16
-          ExplicitTop = 312
           inherited Label12: TLabel
             Top = 22
             Width = 185
@@ -406,7 +429,7 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
   inherited imPrincipal: TImageList
     Left = 24
     Bitmap = {
-      494C010105004000F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010105004000000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

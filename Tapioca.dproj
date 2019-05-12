@@ -107,7 +107,7 @@
         </DCCReference>
         <DCCReference Include="Modelos\Usuario.pas"/>
         <DCCReference Include="Controles\UsuarioControle.pas"/>
-        <DCCReference Include="DataAccess\UusarioDao.pas"/>
+        <DCCReference Include="DataAccess\UsuarioDao.pas"/>
         <DCCReference Include="Modelos\Produto.pas"/>
         <DCCReference Include="DataAccess\DM.pas">
             <Form>dmDB</Form>
@@ -138,6 +138,10 @@
         </DCCReference>
         <DCCReference Include="Controles\ProdutoControle.pas"/>
         <DCCReference Include="DataAccess\ProdutoDao.pas"/>
+        <DCCReference Include="Visao\uAdmCrudUsuarios.pas">
+            <Form>frmAdmCrudUsuarios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

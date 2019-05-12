@@ -34,4 +34,9 @@ object dmDB: TdmDB
     Left = 200
     Top = 216
   end
+  object qrUsuariosListar: TFDQuery
+    Connection = ConDB
+    Left = 56
+    Top = 168
+  end
 end

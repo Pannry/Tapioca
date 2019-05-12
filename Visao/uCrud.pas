@@ -105,6 +105,10 @@ begin
   FUser.Senha := edtCadastroSenha.Text;
   FUser.TipoDeUsuario := CLIENTE;
 
+  FUser.Nome := '';
+  FUser.Telefone := '';
+  FUser.CPF := '';
+
   FeedBack := FUserControle.VerificarSeUsuarioUnico(FUser);
 
   if Feedback.IsEmpty then

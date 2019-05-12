@@ -21,11 +21,8 @@ type
     Panel3: TPanel;
     Shape1: TShape;
     Label2: TLabel;
-    lblNomeProduto: TLabel;
     Label4: TLabel;
-    lblPrecoProduto: TLabel;
     Label8: TLabel;
-    lblQuantidadeProduto: TLabel;
     tsAba2: TTabSheet;
     panelTabSheet2: TPanel;
     Label10: TLabel;
@@ -43,7 +40,6 @@ type
     qrDados: TFDQuery;
     dsDados: TDataSource;
     Label3: TLabel;
-    lblIdProduto: TLabel;
     procedure FormShow(Sender: TObject);
     procedure CategoryButtons1Categories0Items3Click(Sender: TObject);
     procedure CategoryButtons1Categories0Items4Click(Sender: TObject);

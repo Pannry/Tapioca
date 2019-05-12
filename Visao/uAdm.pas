@@ -44,7 +44,7 @@ implementation
 
 {$R *.dfm}
 
-uses uAdmCrudProdutos;
+uses uAdmCrudProdutos, uAdmCrudUsuarios;
 
 procedure TfrmAdm.MouseEnterShape(Sender: TObject);
 begin
@@ -59,7 +59,12 @@ end;
 procedure TfrmAdm.Shape1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-  //
+  frmAdmCrudUsuarios := TfrmAdmCrudUsuarios.Create(Self);
+  try
+    frmAdmCrudUsuarios.ShowModal;
+  finally
+    frmAdmCrudUsuarios.Free;
+  end;
 end;
 
 procedure TfrmAdm.Shape2MouseDown(Sender: TObject; Button: TMouseButton;
