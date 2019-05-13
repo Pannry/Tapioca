@@ -17,7 +17,10 @@ uses
   uAdmCrudProdutos in 'Visao\uAdmCrudProdutos.pas' {frmAdmCrudProdutos},
   ProdutoControle in 'Controles\ProdutoControle.pas',
   ProdutoDao in 'DataAccess\ProdutoDao.pas',
-  uAdmCrudUsuarios in 'Visao\uAdmCrudUsuarios.pas' {frmAdmCrudUsuarios};
+  uAdmCrudUsuarios in 'Visao\uAdmCrudUsuarios.pas' {frmAdmCrudUsuarios},
+  Carrinho in 'Modelos\Carrinho.pas',
+  CarrinhoControle in 'Controles\CarrinhoControle.pas',
+  CarrinhoDao in 'DataAccess\CarrinhoDao.pas';
 
 {$R *.res}
 

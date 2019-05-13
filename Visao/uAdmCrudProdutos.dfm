@@ -12,9 +12,9 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
   end
   inherited Panel2: TPanel
     inherited pcPrincipal: TPageControl
-      ActivePage = tsAba4
       inherited tsAba1: TTabSheet
         inherited DBCtrlGrid1: TDBCtrlGrid
+          Height = 493
           OnPaintPanel = DBCtrlGrid1PaintPanel
           inherited Panel3: TPanel
             inherited Label8: TLabel
@@ -429,7 +429,7 @@ inherited frmAdmCrudProdutos: TfrmAdmCrudProdutos
   inherited imPrincipal: TImageList
     Left = 24
     Bitmap = {
-      494C010105004000000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010105004000040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

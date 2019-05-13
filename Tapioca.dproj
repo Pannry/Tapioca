@@ -142,6 +142,9 @@
             <Form>frmAdmCrudUsuarios</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Modelos\Carrinho.pas"/>
+        <DCCReference Include="Controles\CarrinhoControle.pas"/>
+        <DCCReference Include="DataAccess\CarrinhoDao.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

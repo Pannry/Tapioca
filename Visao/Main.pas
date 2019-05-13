@@ -3,10 +3,13 @@ unit Main;
 interface
 
 uses
-  UsuarioControle, UsuarioLogadoSingleton,
+  UsuarioControle, UsuarioLogadoSingleton, Carrinho,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
-  Vcl.DBCGrids;
+  Vcl.DBCGrids, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
 
 type
   TFrmPrincipal = class(TForm)
@@ -34,11 +37,31 @@ type
     lblNomeUsuario: TLabel;
     Edit1: TEdit;
     SpeedButton2: TSpeedButton;
-    Panel8: TPanel;
-    Shape2: TShape;
-    DBCtrlGrid1: TDBCtrlGrid;
+    cgVitrine: TDBCtrlGrid;
     btnLogout: TSpeedButton;
     btnPerfil: TSpeedButton;
+    qrVitrine: TFDQuery;
+    Panel8: TPanel;
+    Shape2: TShape;
+    lblMainTitulo: TLabel;
+    lblMainPreco: TLabel;
+    lblMainDesc: TLabel;
+    Shape5: TShape;
+    Shape6: TShape;
+    Shape3: TShape;
+    Label9: TLabel;
+    dsVitrine: TDataSource;
+    btnAddCarrinho: TShape;
+    pnCarrinho: TPanel;
+    cgCarrinho: TDBCtrlGrid;
+    Voltar: TButton;
+    Button2: TButton;
+    pnItemCarrinho: TPanel;
+    Shape4: TShape;
+    Shape7: TShape;
+    btnRemoveCarrinho: TShape;
+    lblProdAddCarrinho: TLabel;
+    lblMainQtd: TLabel;
     procedure btnCardapioClick(Sender: TObject);
     procedure btnCadastroClick(Sender: TObject);
     procedure btnLoginClick(Sender: TObject);
@@ -47,9 +70,17 @@ type
     procedure btnLogoutClick(Sender: TObject);
     procedure btnAdministracaoClick(Sender: TObject);
     procedure btnPerfilClick(Sender: TObject);
+    procedure cgVitrinePaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
+    procedure btnAddCarrinhoMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure VoltarClick(Sender: TObject);
+    procedure btnShowCarrinhoClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button2Click(Sender: TObject);
   private
     FPermissao: Integer;
     LogedUser: TUsuarioLogadoSingleton;
+    Carrinho: TCarrinho;
   public
     { Public declarations }
   end;
@@ -60,17 +91,28 @@ var
 implementation
 
 { TODO 0 -oThales -cCardapio: exemplo de cardapios: https://aquilafastfood.com.br/cardapio/ }
-
-{ TODO 0 -oThales -cCardapio: Refazer tela/BD de Produtos (O banco está oK) }
-
-{ TODO 2 -oThales -cProdutos : Adicionar CRUD de produtos }
-{ TODO 2 -oThales -cProdutos : Adicionar CRUD de usuarios (adm's) }
-{ TODO 1 -oThales -cCarrinho : Adicionar um panel com scroll, apenas modificando a visibilidade }
+{ TODO 0 -oThales -cCardapio: Basta apenas deixar o carrinho funcional, q está tudo pronto de interface }
 
 uses
-  uCardapio, uCrud, uAdm;
+  uCardapio, uCrud, uAdm, DM, ProdutoControle;
 
 {$R *.dfm}
+
+procedure TFrmPrincipal.FormShow(Sender: TObject);
+begin
+  LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
+  lblNomeUsuario.Caption := LogedUser.Login;
+  FPermissao := LogedUser.Permissao;
+
+  qrVitrine := TProdutoControle.ListarProduto;
+  dsVitrine.DataSet := qrVitrine;
+  cgVitrinePaintPanel(cgVitrine, cgVitrine.PanelIndex);
+end;
+
+procedure TFrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Carrinho.Free;
+end;
 
 procedure TFrmPrincipal.FormPaint(Sender: TObject);
 begin
@@ -99,13 +141,6 @@ begin
   end;
 end;
 
-procedure TFrmPrincipal.FormShow(Sender: TObject);
-begin
-  LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
-  lblNomeUsuario.Caption := LogedUser.Login;
-  FPermissao := LogedUser.Permissao;
-end;
-
 procedure TFrmPrincipal.btnCardapioClick(Sender: TObject);
 begin
   frmCardapio := TfrmCardapio.Create(self);
@@ -121,6 +156,19 @@ begin
   frmCrud := TfrmCrud.Create(self);
   try
     frmCrud.InicialForm := 'login';
+    frmCrud.ShowModal;
+  finally
+    frmCrud.Free;
+  end;
+  lblNomeUsuario.Caption := LogedUser.Login;
+  FPermissao := LogedUser.Permissao;
+end;
+
+procedure TFrmPrincipal.btnCadastroClick(Sender: TObject);
+begin
+  frmCrud := TfrmCrud.Create(self);
+  try
+    frmCrud.InicialForm := 'signup';
     frmCrud.ShowModal;
   finally
     frmCrud.Free;
@@ -148,6 +196,22 @@ begin
   //
 end;
 
+procedure TFrmPrincipal.cgVitrinePaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
+var
+  curr: Currency;
+begin
+  if qrVitrine.FieldByName('QUANTIDADE').AsInteger = 0 then
+    Shape3.Brush.Color := clRed
+  else
+    Shape3.Brush.Color := clGreen;
+
+  lblMainTitulo.Caption := qrVitrine.FieldByName('NOME').AsString;
+  lblMainDesc.Caption  := qrVitrine.FieldByName('DESCRICAO').AsString;
+  lblMainQtd.Caption  := 'Qtd: ' + qrVitrine.FieldByName('QUANTIDADE').AsString;
+  curr :=  StrToCurr(qrVitrine.FieldByName('PRECO').AsString);
+  lblMainPreco.Caption := 'R$ ' + FormatCurr('#0.#0', curr);
+end;
+
 procedure TFrmPrincipal.btnAdministracaoClick(Sender: TObject);
 begin
   frmAdm := TfrmAdm.Create(self);
@@ -158,17 +222,32 @@ begin
   end;
 end;
 
-procedure TFrmPrincipal.btnCadastroClick(Sender: TObject);
+procedure TFrmPrincipal.btnAddCarrinhoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmCrud := TfrmCrud.Create(self);
-  try
-    frmCrud.InicialForm := 'signup';
-    frmCrud.ShowModal;
-  finally
-    frmCrud.Free;
-  end;
-  lblNomeUsuario.Caption := LogedUser.Login;
-  FPermissao := LogedUser.Permissao;
+  if FPermissao > 0 then
+    ShowMessage('produto adicionado')
+  else
+    ShowMessage('Por favor, realize o login!');
+end;
+
+procedure TFrmPrincipal.VoltarClick(Sender: TObject);
+begin
+  pnCarrinho.Visible := False;
+end;
+
+procedure TFrmPrincipal.btnShowCarrinhoClick(Sender: TObject);
+begin
+  if FPermissao > 0 then
+    pnCarrinho.Visible := True
+  else
+    ShowMessage('Por favor, realize o login!');
+
+end;
+
+procedure TFrmPrincipal.Button2Click(Sender: TObject);
+begin
+  ShowMessage('Compra realizada!');
+  pnCarrinho.Visible := False;
 end;
 
 end.

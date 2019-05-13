@@ -1,6 +1,7 @@
 object FrmPrincipal: TFrmPrincipal
   Left = 0
   Top = 0
+  ActiveControl = cgVitrine
   Caption = 'Ponto de vendas'
   ClientHeight = 573
   ClientWidth = 1016
@@ -12,6 +13,7 @@ object FrmPrincipal: TFrmPrincipal
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnClose = FormClose
   OnPaint = FormPaint
   OnShow = FormShow
   PixelsPerInch = 96
@@ -25,7 +27,7 @@ object FrmPrincipal: TFrmPrincipal
     BevelOuter = bvNone
     ParentBackground = False
     TabOrder = 0
-    object DBCtrlGrid1: TDBCtrlGrid
+    object cgVitrine: TDBCtrlGrid
       AlignWithMargins = True
       Left = 10
       Top = 10
@@ -39,11 +41,13 @@ object FrmPrincipal: TFrmPrincipal
       AllowDelete = False
       AllowInsert = False
       ColCount = 4
+      DataSource = dsVitrine
       PanelBorder = gbNone
       PanelHeight = 164
       PanelWidth = 244
       TabOrder = 0
       RowCount = 2
+      OnPaintPanel = cgVitrinePaintPanel
       object Panel8: TPanel
         AlignWithMargins = True
         Left = 10
@@ -61,52 +65,72 @@ object FrmPrincipal: TFrmPrincipal
           224
           144)
         object Shape2: TShape
-          Left = 4
+          Left = 8
           Top = 0
-          Width = 220
+          Width = 216
           Height = 144
           Align = alClient
           Pen.Style = psClear
-          ExplicitTop = 1
+          ExplicitLeft = 4
+          ExplicitWidth = 220
+          ExplicitHeight = 145
         end
-        object Shape5: TShape
-          Left = 0
-          Top = 112
-          Width = 225
-          Height = 33
-          Anchors = [akLeft, akRight, akBottom]
-          Pen.Color = clMedGray
-          Pen.Style = psInsideFrame
-          ExplicitTop = 114
-        end
-        object Shape3: TShape
-          Left = 0
-          Top = 0
-          Width = 4
-          Height = 144
-          Align = alLeft
-          Brush.Color = clRed
-          Pen.Style = psClear
-          ExplicitHeight = 146
-        end
-        object Label6: TLabel
-          AlignWithMargins = True
+        object lblMainTitulo: TLabel
           Left = 27
-          Top = 21
-          Width = 110
+          Top = 12
+          Width = 49
           Height = 16
-          Caption = 'Tapioca de carne'
+          Caption = 'Tapioca'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = 16744448
+          Font.Color = clBlue
           Font.Height = -13
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object Shape6: TShape
+        object lblMainPreco: TLabel
           AlignWithMargins = True
           Left = 27
-          Top = 120
+          Top = 78
+          Width = 68
+          Height = 19
+          Alignment = taCenter
+          Caption = 'R$: 1,50'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -16
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object lblMainDesc: TLabel
+          AlignWithMargins = True
+          Left = 27
+          Top = 31
+          Width = 121
+          Height = 14
+          Caption = 'Tapiocaa tradicional'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          WordWrap = True
+        end
+        object Shape5: TShape
+          Left = -392
+          Top = 111
+          Width = 616
+          Height = 33
+          Anchors = [akLeft, akRight, akBottom]
+          Pen.Color = clMedGray
+          Pen.Style = psInsideFrame
+        end
+        object Shape6: TShape
+          AlignWithMargins = True
+          Left = 26
+          Top = 117
           Width = 169
           Height = 21
           Margins.Left = 20
@@ -117,10 +141,19 @@ object FrmPrincipal: TFrmPrincipal
           Brush.Color = 33023
           Pen.Style = psClear
         end
+        object Shape3: TShape
+          Left = 0
+          Top = 0
+          Width = 8
+          Height = 144
+          Align = alLeft
+          Brush.Color = clGreen
+          Pen.Style = psClear
+        end
         object Label9: TLabel
           AlignWithMargins = True
-          Left = 58
-          Top = 123
+          Left = 62
+          Top = 120
           Width = 101
           Height = 13
           Alignment = taCenter
@@ -133,16 +166,32 @@ object FrmPrincipal: TFrmPrincipal
           Font.Style = []
           ParentFont = False
         end
-        object Label11: TLabel
+        object btnAddCarrinho: TShape
           AlignWithMargins = True
-          Left = 27
-          Top = 61
+          Left = 12
+          Top = 114
+          Width = 204
+          Height = 27
+          Margins.Left = 20
+          Margins.Top = 10
+          Margins.Right = 20
+          Margins.Bottom = 10
+          Anchors = [akTop, akRight]
+          Brush.Style = bsClear
+          Pen.Color = clNone
+          Pen.Style = psClear
+          OnMouseDown = btnAddCarrinhoMouseDown
+        end
+        object lblMainQtd: TLabel
+          AlignWithMargins = True
+          Left = 127
+          Top = 78
           Width = 68
           Height = 19
           Alignment = taCenter
           Caption = 'R$: 1,50'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clGreen
+          Font.Color = clBlack
           Font.Height = -16
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
@@ -815,6 +864,7 @@ object FrmPrincipal: TFrmPrincipal
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+        OnClick = btnShowCarrinhoClick
       end
       object SpeedButton2: TSpeedButton
         Tag = -1
@@ -837,5 +887,104 @@ object FrmPrincipal: TFrmPrincipal
         TextHint = 'Sabor'
       end
     end
+  end
+  object pnCarrinho: TPanel
+    Left = 600
+    Top = 33
+    Width = 317
+    Height = 440
+    TabOrder = 5
+    Visible = False
+    object cgCarrinho: TDBCtrlGrid
+      Left = 1
+      Top = 1
+      Width = 315
+      Height = 399
+      PanelBorder = gbNone
+      PanelHeight = 57
+      PanelWidth = 298
+      TabOrder = 0
+      RowCount = 7
+      object pnItemCarrinho: TPanel
+        Left = 0
+        Top = 0
+        Width = 298
+        Height = 57
+        Margins.Left = 10
+        Margins.Top = 10
+        Margins.Right = 10
+        Margins.Bottom = 10
+        Align = alClient
+        BevelOuter = bvNone
+        Color = clBtnHighlight
+        ParentBackground = False
+        TabOrder = 0
+        object Shape4: TShape
+          Left = 248
+          Top = 5
+          Width = 47
+          Height = 46
+          Brush.Color = clRed
+          Pen.Style = psClear
+          Shape = stCircle
+        end
+        object Shape7: TShape
+          Left = 259
+          Top = 24
+          Width = 23
+          Height = 7
+          Pen.Style = psClear
+        end
+        object btnRemoveCarrinho: TShape
+          Left = 240
+          Top = 3
+          Width = 58
+          Height = 50
+          Brush.Style = bsClear
+          Pen.Style = psClear
+        end
+        object lblProdAddCarrinho: TLabel
+          Left = 16
+          Top = 18
+          Width = 133
+          Height = 18
+          Caption = 'Tapioca de frango'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+      end
+    end
+    object Voltar: TButton
+      Left = 132
+      Top = 406
+      Width = 75
+      Height = 25
+      Caption = 'Voltar'
+      TabOrder = 1
+      OnClick = VoltarClick
+    end
+    object Button2: TButton
+      Left = 228
+      Top = 406
+      Width = 75
+      Height = 25
+      Caption = 'Comprar'
+      TabOrder = 2
+      OnClick = Button2Click
+    end
+  end
+  object qrVitrine: TFDQuery
+    Connection = dmDB.ConDB
+    Left = 278
+    Top = 241
+  end
+  object dsVitrine: TDataSource
+    DataSet = qrVitrine
+    Left = 336
+    Top = 240
   end
 end
