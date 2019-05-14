@@ -30,7 +30,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TdmDB, dmDB);
   Application.CreateForm(TFrmPrincipal, FrmPrincipal);
-  Application.CreateForm(TfrmAdmCrudUsuarios, frmAdmCrudUsuarios);
-  //  Application.CreateForm(TfrmAdmCrudProdutos, frmAdmCrudProdutos);
   Application.Run;
 end.

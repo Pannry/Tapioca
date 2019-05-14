@@ -5,12 +5,11 @@ object dmDB: TdmDB
   object ConDB: TFDConnection
     Params.Strings = (
       
-        'Database=C:\Users\Thales\Documents\Thales\Projetos\Tapioca\dados' +
-        '\BILLYAPS2.FDB'
+        'Database=C:\Users\Thales\Downloads\Tapioca-master\dados\BILLYAPS' +
+        '2.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'DriverID=FB')
-    Connected = True
     LoginPrompt = False
     Left = 456
     Top = 40

@@ -116,6 +116,9 @@ end;
 
 procedure TFrmPrincipal.FormPaint(Sender: TObject);
 begin
+  lblNomeUsuario.Caption := LogedUser.Login;
+  FPermissao := LogedUser.Permissao;
+
   if FPermissao = 2 then
   begin
     btnAdministracao.Visible := True;
@@ -193,7 +196,15 @@ end;
 
 procedure TFrmPrincipal.btnPerfilClick(Sender: TObject);
 begin
-  //
+  frmCrud := TfrmCrud.Create(self);
+  try
+    frmCrud.InicialForm := 'perfil';
+    frmCrud.ShowModal;
+  finally
+    frmCrud.Free;
+  end;
+  lblNomeUsuario.Caption := LogedUser.Login;
+  FPermissao := LogedUser.Permissao;
 end;
 
 procedure TFrmPrincipal.cgVitrinePaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);

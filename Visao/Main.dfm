@@ -610,7 +610,7 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = btnLoginClick
-      ExplicitLeft = 875
+      ExplicitTop = -3
     end
     object btnCadastro: TSpeedButton
       Left = 896
@@ -889,8 +889,8 @@ object FrmPrincipal: TFrmPrincipal
     end
   end
   object pnCarrinho: TPanel
-    Left = 600
-    Top = 33
+    Left = 392
+    Top = 125
     Width = 317
     Height = 440
     TabOrder = 5

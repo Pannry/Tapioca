@@ -189,7 +189,7 @@ var
   fb: string;
 begin
   inherited;
-  User.Nome := lkCbRemUser.Text;
+  User.Login := lkCbRemUser.Text;
 
   fb := UserControl.RemoverUsuario(User);
   SuccessMensage(lblFbRemUser, fb);

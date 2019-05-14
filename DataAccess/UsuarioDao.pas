@@ -3,7 +3,7 @@ unit UsuarioDao;
 interface
 
 uses
-  Usuario, FireDAC.Comp.Client;
+  Usuario, FireDAC.Comp.Client, FireDAC.Stan.Param;
 
 type
   TUsuarioDao = class
@@ -48,7 +48,7 @@ begin
   dmDB.qrAdmin.Close;
 
   dmDB.qrAdmin.SQL.Text :=
-'UPDATE USUARIOS SET NOME = :nomeSQL, LOGIN = :LoginSQL, SENHA = :senhaSQL, TIPO = :TipoSQL, CPF = :cpfSQL, TELEFONE = :foneSQL WHERE NOME = :nomeSQL';
+'UPDATE USUARIOS SET NOME = :nomeSQL, LOGIN = :LoginSQL, SENHA = :senhaSQL, TIPO = :TipoSQL, CPF = :cpfSQL, TELEFONE = :foneSQL WHERE LOGIN = :LoginSQL';
 
   dmDB.qrAdmin.ParamByName('nomeSQL').AsString := User.Nome;
   dmDB.qrAdmin.ParamByName('LoginSQL').AsString := User.Login;
@@ -87,23 +87,35 @@ end;
 
 function TUsuarioDao.RealizarLogin(User: TUsuario): string;
 var
+  UserMakeLogin: TUsuario;
   LogedUser: TUsuarioLogadoSingleton;
-  login: string;
-  tipo: Integer;
 begin
   try
     dmDB.qrAdmin.Close;
 
+    //Capturando os dados do usuário
     dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIOS WHERE LOGIN = :LoginSQL and SENHA = :SenhaSQL';
     dmDB.qrAdmin.ParamByName('LoginSQL').AsString := User.Login;
     dmDB.qrAdmin.ParamByName('SenhaSQL').AsString := User.Senha;
     dmDB.qrAdmin.Open;
 
-    login := dmDB.qrAdmin.FieldByName('LOGIN').AsString;
-    tipo := dmDB.qrAdmin.FieldByName('TIPO').AsInteger;
+    UserMakeLogin := TUsuario.Create;
+    try
+      UserMakeLogin.login := dmDB.qrAdmin.FieldByName('LOGIN').AsString;
+      UserMakeLogin.senha := dmDB.qrAdmin.FieldByName('SENHA').AsString;
+      UserMakeLogin.nome := dmDB.qrAdmin.FieldByName('NOME').AsString;
+      UserMakeLogin.CPF := dmDB.qrAdmin.FieldByName('CPF').AsString;
+      UserMakeLogin.Telefone := dmDB.qrAdmin.FieldByName('TELEFONE').AsString;
+      UserMakeLogin.TipoDeUsuario := dmDB.qrAdmin.FieldByName('TIPO').AsInteger;
 
-    LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
-    LogedUser.DefinirUsuario(login, tipo);
+      LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
+      LogedUser.DefinirUsuarioCompleto(UserMakeLogin);
+    finally
+      UserMakeLogin.Free;
+    end;
+
+    dmDB.qrAdmin.Close;
+
     Result := '';
   except
     Result := 'Falha no login';
@@ -115,14 +127,14 @@ var
   LogedUser: TUsuarioLogadoSingleton;
 begin
   LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
-  LogedUser.DefinirUsuario;
+  LogedUser.DefinirUsuarioCompleto;
 end;
 
 function TUsuarioDao.RemoverUsuario(User: TUsuario): string;
 begin
   dmDB.qrAdmin.Close;
-  dmDB.qrAdmin.SQL.Text := 'DELETE FROM Usuarios WHERE LOGIN = :nomeSQL';
-  dmDB.qrAdmin.ParamByName('nomeSQL').AsString := User.Nome;
+  dmDB.qrAdmin.SQL.Text := 'DELETE FROM Usuarios WHERE LOGIN = :loginSQL';
+  dmDB.qrAdmin.ParamByName('loginSQL').AsString := User.Login;
   dmDB.qrAdmin.ExecSQL;
 
   Result := 'Usuário removido!';
