@@ -3,13 +3,14 @@ unit Main;
 interface
 
 uses
-  UsuarioControle, UsuarioLogadoSingleton, Carrinho, Notificacao,
+  UsuarioControle, UsuarioLogadoSingleton, Carrinho, Notificacao, CarrinhoControle,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
   Vcl.DBCGrids, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, LogConcreteObserverSingleton;
+  FireDAC.Comp.Client, LogConcreteObserverSingleton, FireDAC.Stan.StorageBin,
+  Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient, Datasnap.Provider;
 
 type
   TFrmPrincipal = class(TForm)
@@ -55,7 +56,7 @@ type
     pnCarrinho: TPanel;
     cgCarrinho: TDBCtrlGrid;
     Voltar: TButton;
-    Button2: TButton;
+    btnComprarCart: TButton;
     pnItemCarrinho: TPanel;
     Shape4: TShape;
     Shape7: TShape;
@@ -68,6 +69,12 @@ type
     lblNotif: TLabel;
     shpBordaAdicionarCarrinho: TShape;
     LogNotificacoes: TFrameLogNotificacoes;
+    dsCart: TDataSource;
+    qrtempCart: TFDMemTable;
+    qrtempCartID: TIntegerField;
+    qrtempCartNome: TStringField;
+    qrtempCartPreco: TFloatField;
+    qrtempCartQuantidade: TIntegerField;
     procedure btnCardapioClick(Sender: TObject);
     procedure btnCadastroClick(Sender: TObject);
     procedure btnLoginClick(Sender: TObject);
@@ -82,17 +89,19 @@ type
     procedure VoltarClick(Sender: TObject);
     procedure btnShowCarrinhoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Button2Click(Sender: TObject);
+    procedure btnComprarCartClick(Sender: TObject);
     procedure btnSolicitarNotificacaoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure cgCarrinhoPaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
+    procedure btnRemoveCarrinhoMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     FPermissao: Integer;
     LogedUser: TUsuarioLogadoSingleton;
-    Carrinho: TCarrinho;
     Notificacao: TNotificacao;
+    CartCtrt: TCarrinhoControle;
+    procedure LimparCarrinho;
   public
-    { Public declarations }
-    procedure Refresh();
+    procedure Refresh;
   end;
 
 var
@@ -105,8 +114,22 @@ uses
 
 {$R *.dfm}
 
+procedure TFrmPrincipal.LimparCarrinho;
+begin
+  if not qrtempCart.IsEmpty then
+  begin
+
+    qrtempCart.EmptyDataSet;
+  end;
+
+end;
+
 procedure TFrmPrincipal.FormShow(Sender: TObject);
 begin
+  CartCtrt := TCarrinhoControle.Create;
+
+  qrtempCart.Open;
+
   LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
   lblNomeUsuario.Caption := LogedUser.Login;
   FPermissao := LogedUser.Permissao;
@@ -119,7 +142,7 @@ end;
 
 procedure TFrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Carrinho.Free;
+  CartCtrt.Free;
 end;
 
 procedure TFrmPrincipal.FormPaint(Sender: TObject);
@@ -172,6 +195,7 @@ begin
   try
     frmCrud.InicialForm := 'login';
     frmCrud.ShowModal;
+    LimparCarrinho;
   finally
     frmCrud.Free;
   end;
@@ -202,7 +226,7 @@ begin
     lblNomeUsuario.Caption := 'Convidado';//LogedUser.Login;
     FPermissao :=  0;//LogedUser.Permissao;
     LogNotificacoes.Visible := False;
-    Refresh();
+    Refresh;
   finally
     UserCtrl.Free;
   end;
@@ -223,7 +247,7 @@ end;
 
 procedure TFrmPrincipal.cgCarrinhoPaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
 begin
-  //  Implementação do carrinho
+  lblProdAddCarrinho.Caption := qrTempCart.FieldByName('NOME').AsString;
 end;
 
 Procedure TFrmPrincipal.cgVitrinePaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
@@ -250,14 +274,6 @@ begin
   finally
     frmAdm.Free;
   end;
-end;
-
-procedure TFrmPrincipal.btnNotificacaoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  if FPermissao > 0 then
-    ShowMessage('produto adicionado')
-  else
-    ShowMessage('Por favor, realize o login!');
 end;
 
 procedure TFrmPrincipal.btnSolicitarNotificacaoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -309,22 +325,6 @@ begin
   pnCarrinho.Visible := False;
 end;
 
-procedure TFrmPrincipal.btnShowCarrinhoClick(Sender: TObject);
-begin
-  if FPermissao > 0 then
-    pnCarrinho.Visible := True
-  else
-    ShowMessage('Por favor, realize o login!');
-
-end;
-
-procedure TFrmPrincipal.Button2Click(Sender: TObject);
-begin
-  ShowMessage('Compra realizada!');
-  pnCarrinho.Visible := False;
-end;
-
-
 procedure TFrmPrincipal.Refresh;
 var
   Notif: TNotificacao;
@@ -364,6 +364,53 @@ begin
     btnLogout.Visible := False;
     btnPerfil.Visible := False;
   end;
+end;
+
+// ------------------ CARRINHO -------------------------
+
+procedure TFrmPrincipal.btnShowCarrinhoClick(Sender: TObject);
+begin
+  if FPermissao > 0 then
+    pnCarrinho.Visible := True
+  else
+    ShowMessage('Por favor, realize o login!');
+end;
+
+procedure TFrmPrincipal.btnNotificacaoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+// Adicionar produto no carrinho de compras
+begin
+  if FPermissao > 0 then
+  begin
+    with qrtempCart do begin
+      Open;
+      Append;
+      Fields[0].AsInteger := qrVitrine.FieldByName('ID').AsInteger;
+      Fields[1].AsString := qrVitrine.FieldByName('NOME').AsString;
+      Fields[2].AsFloat := qrVitrine.FieldByName('PRECO').AsFloat;
+      Fields[3].AsInteger := qrVitrine.FieldByName('QUANTIDADE').AsInteger;
+      Post;
+    end;
+    ShowMessage('produto adicionado');
+  end
+  else
+    ShowMessage('Por favor, realize o login!');
+end;
+
+procedure TFrmPrincipal.btnRemoveCarrinhoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  qrtempCart.Delete;
+end;
+
+procedure TFrmPrincipal.btnComprarCartClick(Sender: TObject);
+// Enviar dados para o banco de dados
+var
+  fb: string;
+begin
+  fb := CartCtrt.RealizarCompra(qrTempCart);
+
+  ShowMessage('Compra realizada!');
+  LimparCarrinho;
+  pnCarrinho.Visible := False;
 end;
 
 end.

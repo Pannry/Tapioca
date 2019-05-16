@@ -980,10 +980,11 @@ object FrmPrincipal: TFrmPrincipal
     TabOrder = 5
     Visible = False
     object cgCarrinho: TDBCtrlGrid
-      Left = 1
+      Left = 0
       Top = 1
       Width = 315
       Height = 399
+      DataSource = dsCart
       PanelBorder = gbNone
       PanelHeight = 57
       PanelWidth = 298
@@ -1027,6 +1028,7 @@ object FrmPrincipal: TFrmPrincipal
           Height = 50
           Brush.Style = bsClear
           Pen.Style = psClear
+          OnMouseDown = btnRemoveCarrinhoMouseDown
         end
         object lblProdAddCarrinho: TLabel
           Left = 16
@@ -1052,18 +1054,20 @@ object FrmPrincipal: TFrmPrincipal
       TabOrder = 1
       OnClick = VoltarClick
     end
-    object Button2: TButton
+    object btnComprarCart: TButton
       Left = 228
       Top = 406
       Width = 75
       Height = 25
       Caption = 'Comprar'
       TabOrder = 2
-      OnClick = Button2Click
+      OnClick = btnComprarCartClick
     end
   end
   object qrVitrine: TFDQuery
     Connection = dmDB.ConDB
+    SQL.Strings = (
+      'select * from produtos')
     Left = 30
     Top = 401
   end
@@ -1071,5 +1075,43 @@ object FrmPrincipal: TFrmPrincipal
     DataSet = qrVitrine
     Left = 104
     Top = 400
+  end
+  object dsCart: TDataSource
+    DataSet = qrtempCart
+    Left = 368
+    Top = 184
+  end
+  object qrtempCart: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    DetailFields = 'Nome'
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvPersistent, rvSilentMode]
+    ResourceOptions.Persistent = True
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 312
+    Top = 184
+    object qrtempCartID: TIntegerField
+      DisplayWidth = 10
+      FieldName = 'ID'
+    end
+    object qrtempCartNome: TStringField
+      DisplayWidth = 26
+      FieldName = 'Nome'
+      Size = 100
+    end
+    object qrtempCartPreco: TFloatField
+      DisplayWidth = 10
+      FieldName = 'Preco'
+    end
+    object qrtempCartQuantidade: TIntegerField
+      DisplayWidth = 10
+      FieldName = 'Quantidade'
+    end
   end
 end

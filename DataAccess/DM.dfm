@@ -1,7 +1,7 @@
 object dmDB: TdmDB
   OldCreateOrder = False
-  Height = 297
-  Width = 958
+  Height = 445
+  Width = 257
   object ConDB: TFDConnection
     Params.Strings = (
       
@@ -10,6 +10,7 @@ object dmDB: TdmDB
       'User_Name=SYSDBA'
       'Password=masterkey'
       'DriverID=FB')
+    Connected = True
     LoginPrompt = False
     Left = 32
     Top = 8
@@ -42,5 +43,12 @@ object dmDB: TdmDB
     Connection = ConDB
     Left = 32
     Top = 232
+  end
+  object qrCarrinho: TFDQuery
+    Connection = ConDB
+    SQL.Strings = (
+      'select * from produtos')
+    Left = 32
+    Top = 288
   end
 end
