@@ -20,7 +20,10 @@ uses
   uAdmCrudUsuarios in 'Visao\uAdmCrudUsuarios.pas' {frmAdmCrudUsuarios},
   Carrinho in 'Modelos\Carrinho.pas',
   CarrinhoControle in 'Controles\CarrinhoControle.pas',
-  CarrinhoDao in 'DataAccess\CarrinhoDao.pas';
+  CarrinhoDao in 'DataAccess\CarrinhoDao.pas',
+  Notificacao in 'Modelos\Notificacao.pas',
+  LogConcreteObserverSingleton in 'Frames\LogConcreteObserverSingleton.pas' {FrameLogNotificacoes: TFrame},
+  IObserver in 'Interfaces\IObserver.pas';
 
 {$R *.res}
 

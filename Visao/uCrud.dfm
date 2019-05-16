@@ -1,7 +1,6 @@
 object frmCrud: TfrmCrud
   Left = 0
   Top = 0
-  ActiveControl = pcCrud
   BorderStyle = bsNone
   Caption = 'Form1'
   ClientHeight = 527
@@ -729,7 +728,7 @@ object frmCrud: TfrmCrud
           Pen.Width = 0
         end
         object lblFeedbackPerfil: TLabel
-          Left = 26
+          Left = 74
           Top = 401
           Width = 5
           Height = 19
@@ -771,7 +770,6 @@ object frmCrud: TfrmCrud
           BiDiMode = bdLeftToRight
           BorderStyle = bsNone
           Color = clWhite
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -16
@@ -779,7 +777,6 @@ object frmCrud: TfrmCrud
           Font.Style = []
           ParentBiDiMode = False
           ParentFont = False
-          ReadOnly = True
           TabOrder = 0
           TextHint = 'Login'
         end
@@ -888,7 +885,6 @@ object frmCrud: TfrmCrud
           BiDiMode = bdLeftToRight
           BorderStyle = bsNone
           Color = clWhite
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -16

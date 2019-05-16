@@ -17,6 +17,7 @@ type
     qrProdutos: TFDQuery;
     qrProdutosListar: TFDQuery;
     qrUsuariosListar: TFDQuery;
+    qrNotificacao: TFDQuery;
   private
     { Private declarations }
   public

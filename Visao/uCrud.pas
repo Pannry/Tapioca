@@ -100,7 +100,7 @@ implementation
 {$R *.dfm}
 
 uses
-  SystemUtils;
+  SystemUtils, Notificacao;
 
 procedure TfrmCrud.FormShow(Sender: TObject);
 var
@@ -115,7 +115,7 @@ begin
 
   if InicialForm  = 'login' then
     pcCrud.ActivePage := tsLogin
-  else if InicialForm  = 'perfil' then
+  else if (InicialForm  = 'perfil') then
     begin
       //Capturando os atributos do usuário logado
       edtLogin.text := LogedUser.Login;
@@ -123,14 +123,12 @@ begin
       edtNome.text := LogedUser.Nome;
       edtCPF.text := LogedUser.CPF;
       edtTelefone.text := LogedUser.Telefone;
-
       if (LogedUser.Permissao = 0) then
         edtTipo.text := 'Convidado'
       else if (LogedUser.Permissao = 1) then
         edtTipo.text := 'Cliente'
       else
         edtTipo.text := 'Administrador';
-
       pcCrud.ActivePage := tsPerfil
     end
   else
@@ -139,6 +137,7 @@ end;
 
 procedure TfrmCrud.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  Main.FrmPrincipal.Refresh;
   FUserControle.Free;
   FUser.Free;
 end;
@@ -172,6 +171,8 @@ end;
 procedure TfrmCrud.btnLoginLoginClick(Sender: TObject);
 var
   Feedback: string;
+  Notif: TNotificacao;
+
 begin
   FUser.Login := edtLoginLogin.Text;
   FUser.Senha := edtLoginSenha.Text;
@@ -180,7 +181,9 @@ begin
   if Feedback.IsEmpty then
     Close;
 
+  Notif.UsuarioID := LogedUser.Id;
   FailMensage(lblfeedbackLogin, Feedback);
+
 end;
 
 procedure TfrmCrud.btnSalvarAlteracoesClick(Sender: TObject);
@@ -194,15 +197,29 @@ begin
   FUser.CPF := edtCPF.text;
   FUser.Telefone := edtTelefone.text;
 
-  if edtTipo.text = 'Convidado' then
+  if (edtTipo.text = 'Convidado') then
     FUser.TipoDeUsuario := 0
-  else if edtTipo.text = 'Cliente' then
+  else if (edtTipo.text = 'Cliente') then
     FUser.TipoDeUsuario := 1
   else
     FUser.TipoDeUsuario := 2;
 
-  Feedback := FUserControle.EditarUsuario(FUser);
-  SuccessMensage(lblFeedbackPerfil, Feedback);
+  //Verificar a unicidade do login
+  FeedBack := FUserControle.VerificarSeUsuarioUnico(FUser);
+
+  if Feedback.IsEmpty then
+  begin
+    Feedback := FUserControle.EditarUsuario(FUser);
+    //Atualizando o Singleton
+    LogedUser.Login := edtLogin.text;
+    LogedUser.Senha := edtSenha.text;
+    LogedUser.Nome := edtNome.text;
+    LogedUser.CPF := edtCPF.text;
+    LogedUser.Telefone := edtTelefone.text;
+    SuccessMensage(lblfeedbackPerfil, Feedback);
+  end
+  else
+    FailMensage(lblfeedbackPerfil, Feedback);
 end;
 
 procedure TfrmCrud.btnCadastroLoginClick(Sender: TObject);

@@ -20,9 +20,9 @@ object FrmPrincipal: TFrmPrincipal
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 220
+    Top = 217
     Width = 1016
-    Height = 353
+    Height = 356
     Align = alClient
     BevelOuter = bvNone
     ParentBackground = False
@@ -32,7 +32,7 @@ object FrmPrincipal: TFrmPrincipal
       Left = 10
       Top = 10
       Width = 996
-      Height = 328
+      Height = 331
       Margins.Left = 10
       Margins.Top = 10
       Margins.Right = 10
@@ -43,17 +43,32 @@ object FrmPrincipal: TFrmPrincipal
       ColCount = 4
       DataSource = dsVitrine
       PanelBorder = gbNone
-      PanelHeight = 164
+      PanelHeight = 165
       PanelWidth = 244
       TabOrder = 0
       RowCount = 2
+      OnEnter = FormPaint
       OnPaintPanel = cgVitrinePaintPanel
+      object Shape9: TShape
+        AlignWithMargins = True
+        Left = 30
+        Top = 94
+        Width = 169
+        Height = 21
+        Margins.Left = 20
+        Margins.Top = 10
+        Margins.Right = 20
+        Margins.Bottom = 10
+        Anchors = [akTop, akRight]
+        Brush.Color = 33023
+        Pen.Style = psClear
+      end
       object Panel8: TPanel
         AlignWithMargins = True
         Left = 10
         Top = 10
         Width = 224
-        Height = 144
+        Height = 145
         Margins.Left = 10
         Margins.Top = 10
         Margins.Right = 10
@@ -63,17 +78,16 @@ object FrmPrincipal: TFrmPrincipal
         TabOrder = 0
         DesignSize = (
           224
-          144)
-        object Shape2: TShape
+          145)
+        object shpFundoPrincipal: TShape
           Left = 8
           Top = 0
           Width = 216
-          Height = 144
+          Height = 145
           Align = alClient
           Pen.Style = psClear
           ExplicitLeft = 4
           ExplicitWidth = 220
-          ExplicitHeight = 145
         end
         object lblMainTitulo: TLabel
           Left = 27
@@ -91,7 +105,7 @@ object FrmPrincipal: TFrmPrincipal
         object lblMainPreco: TLabel
           AlignWithMargins = True
           Left = 27
-          Top = 78
+          Top = 51
           Width = 68
           Height = 19
           Alignment = taCenter
@@ -107,9 +121,9 @@ object FrmPrincipal: TFrmPrincipal
           AlignWithMargins = True
           Left = 27
           Top = 31
-          Width = 121
+          Width = 114
           Height = 14
-          Caption = 'Tapiocaa tradicional'
+          Caption = 'Tapioca tradicional'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -118,20 +132,35 @@ object FrmPrincipal: TFrmPrincipal
           ParentFont = False
           WordWrap = True
         end
-        object Shape5: TShape
+        object lblMainQtd: TLabel
+          AlignWithMargins = True
+          Left = 127
+          Top = 51
+          Width = 68
+          Height = 19
+          Alignment = taCenter
+          Caption = 'R$: 1,50'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object shpBordaAdicionarCarrinho: TShape
           Left = -392
-          Top = 111
-          Width = 616
-          Height = 33
+          Top = 80
+          Width = 617
+          Height = 32
           Anchors = [akLeft, akRight, akBottom]
           Pen.Color = clMedGray
           Pen.Style = psInsideFrame
         end
-        object Shape6: TShape
+        object shpFundoLaranja: TShape
           AlignWithMargins = True
-          Left = 26
-          Top = 117
-          Width = 169
+          Left = 22
+          Top = 86
+          Width = 187
           Height = 21
           Margins.Left = 20
           Margins.Top = 10
@@ -141,19 +170,10 @@ object FrmPrincipal: TFrmPrincipal
           Brush.Color = 33023
           Pen.Style = psClear
         end
-        object Shape3: TShape
-          Left = 0
-          Top = 0
-          Width = 8
-          Height = 144
-          Align = alLeft
-          Brush.Color = clGreen
-          Pen.Style = psClear
-        end
-        object Label9: TLabel
+        object lblAdicionarCarrinho: TLabel
           AlignWithMargins = True
-          Left = 62
-          Top = 120
+          Left = 65
+          Top = 89
           Width = 101
           Height = 13
           Alignment = taCenter
@@ -166,12 +186,21 @@ object FrmPrincipal: TFrmPrincipal
           Font.Style = []
           ParentFont = False
         end
+        object Shape5: TShape
+          Left = -392
+          Top = 108
+          Width = 616
+          Height = 32
+          Anchors = [akLeft, akRight, akBottom]
+          Pen.Color = clMedGray
+          Pen.Style = psInsideFrame
+        end
         object btnAddCarrinho: TShape
           AlignWithMargins = True
-          Left = 12
-          Top = 114
-          Width = 204
-          Height = 27
+          Left = 22
+          Top = 86
+          Width = 187
+          Height = 21
           Margins.Left = 20
           Margins.Top = 10
           Margins.Right = 20
@@ -180,22 +209,63 @@ object FrmPrincipal: TFrmPrincipal
           Brush.Style = bsClear
           Pen.Color = clNone
           Pen.Style = psClear
-          OnMouseDown = btnAddCarrinhoMouseDown
+          OnMouseDown = btnNotificacaoMouseDown
         end
-        object lblMainQtd: TLabel
+        object shpBordaLateral: TShape
+          Left = 0
+          Top = 0
+          Width = 8
+          Height = 145
+          Align = alLeft
+          Brush.Color = clGreen
+          Pen.Style = psClear
+          ExplicitHeight = 144
+        end
+        object shpFundoCinza: TShape
           AlignWithMargins = True
-          Left = 127
-          Top = 78
-          Width = 68
-          Height = 19
+          Left = 22
+          Top = 115
+          Width = 187
+          Height = 21
+          Margins.Left = 20
+          Margins.Top = 10
+          Margins.Right = 20
+          Margins.Bottom = 10
+          Anchors = [akTop, akRight]
+          Brush.Color = clGray
+          Pen.Style = psClear
+        end
+        object lblNotif: TLabel
+          AlignWithMargins = True
+          Left = 44
+          Top = 118
+          Width = 137
+          Height = 13
           Alignment = taCenter
-          Caption = 'R$: 1,50'
+          Anchors = [akTop, akRight]
+          Caption = 'Avise-me quando dispon'#237'vel!'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -16
+          Font.Color = clWhite
+          Font.Height = -11
           Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
+          Font.Style = []
           ParentFont = False
+        end
+        object btnNotificacao: TShape
+          AlignWithMargins = True
+          Left = 22
+          Top = 115
+          Width = 187
+          Height = 21
+          Margins.Left = 20
+          Margins.Top = 10
+          Margins.Right = 20
+          Margins.Bottom = 10
+          Anchors = [akTop, akRight]
+          Brush.Style = bsClear
+          Pen.Color = clNone
+          Pen.Style = psClear
+          OnMouseDown = btnSolicitarNotificacaoMouseDown
         end
       end
     end
@@ -274,7 +344,7 @@ object FrmPrincipal: TFrmPrincipal
     Left = 0
     Top = 41
     Width = 1016
-    Height = 41
+    Height = 38
     Align = alTop
     BevelOuter = bvNone
     Color = clBtnHighlight
@@ -284,7 +354,7 @@ object FrmPrincipal: TFrmPrincipal
       Left = 216
       Top = 0
       Width = 120
-      Height = 41
+      Height = 38
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -315,14 +385,14 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       Visible = False
       OnClick = btnAdministracaoClick
-      ExplicitLeft = 189
-      ExplicitTop = 3
+      ExplicitLeft = 335
+      ExplicitTop = -3
     end
     object btnRelatorios: TSpeedButton
       Left = 336
       Top = 0
       Width = 119
-      Height = 41
+      Height = 38
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -430,14 +500,14 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       Visible = False
-      ExplicitLeft = 358
       ExplicitTop = -3
+      ExplicitHeight = 41
     end
     object btnCardapio: TSpeedButton
       Left = 109
       Top = 0
       Width = 107
-      Height = 41
+      Height = 38
       Align = alLeft
       Caption = 'Cardapio'
       Flat = True
@@ -541,12 +611,13 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = btnCardapioClick
+      ExplicitHeight = 41
     end
     object btnTelaPrincipal: TSpeedButton
       Left = 0
       Top = 0
       Width = 109
-      Height = 41
+      Height = 38
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -575,12 +646,13 @@ object FrmPrincipal: TFrmPrincipal
         F777777FFFFFFFFFFFFFFFFFFFFFFFFFFF7777FFFFFFFFFFFFFFFFFFFFFFFFFF
         FFF77FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+      ExplicitHeight = 41
     end
     object btnLogin: TSpeedButton
-      Left = 776
+      Left = 656
       Top = 0
       Width = 120
-      Height = 41
+      Height = 38
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -610,13 +682,15 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = btnLoginClick
+      ExplicitLeft = 776
       ExplicitTop = -3
+      ExplicitHeight = 41
     end
     object btnCadastro: TSpeedButton
-      Left = 896
+      Left = 776
       Top = 0
       Width = 120
-      Height = 41
+      Height = 38
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -648,12 +722,13 @@ object FrmPrincipal: TFrmPrincipal
       OnClick = btnCadastroClick
       ExplicitLeft = 920
       ExplicitTop = 3
+      ExplicitHeight = 41
     end
     object btnLogout: TSpeedButton
-      Left = 656
+      Left = 536
       Top = 0
       Width = 120
-      Height = 41
+      Height = 38
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -684,83 +759,13 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       Visible = False
       OnClick = btnLogoutClick
-      ExplicitLeft = 816
       ExplicitTop = -3
     end
-  end
-  object Panel4: TPanel
-    Left = 0
-    Top = 82
-    Width = 1016
-    Height = 89
-    Align = alTop
-    BevelOuter = bvNone
-    TabOrder = 3
-    object Label3: TLabel
-      Left = 37
-      Top = 24
-      Width = 203
-      Height = 24
-      Caption = 'Aplicativo das tapiocas'
-      Color = clBtnFace
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -20
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
-    object Label4: TLabel
-      Left = 85
-      Top = 54
-      Width = 48
-      Height = 16
-      Caption = 'Principal'
-      Color = clBtnFace
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
-    object Label2: TLabel
-      Left = 776
-      Top = 14
-      Width = 84
-      Height = 25
-      Caption = 'Usu'#225'rio: '
-      Color = clBtnFace
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -21
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
-    object lblNomeUsuario: TLabel
-      Left = 776
-      Top = 45
-      Width = 97
-      Height = 25
-      Caption = 'Convidado'
-      Color = clBtnFace
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -21
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
     object btnPerfil: TSpeedButton
-      Left = 920
+      Left = 896
       Top = 0
-      Width = 96
-      Height = 89
+      Width = 120
+      Height = 38
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -790,11 +795,90 @@ object FrmPrincipal: TFrmPrincipal
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = btnPerfilClick
+      ExplicitLeft = 928
+    end
+  end
+  object Panel4: TPanel
+    Left = 0
+    Top = 79
+    Width = 1016
+    Height = 89
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 3
+    object Label3: TLabel
+      Left = 20
+      Top = 6
+      Width = 203
+      Height = 24
+      Caption = 'Aplicativo das tapiocas'
+      Color = clBtnFace
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 23
+      Top = 70
+      Width = 48
+      Height = 16
+      Caption = 'Principal'
+      Color = clBtnFace
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 20
+      Top = 36
+      Width = 84
+      Height = 25
+      Caption = 'Usu'#225'rio: '
+      Color = clBtnFace
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblNomeUsuario: TLabel
+      Left = 104
+      Top = 36
+      Width = 97
+      Height = 25
+      Caption = 'Convidado'
+      Color = clBtnFace
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+    end
+    inline LogNotificacoes: TFrameLogNotificacoes
+      Left = 629
+      Top = 0
+      Width = 387
+      Height = 89
+      Align = alRight
+      TabOrder = 0
+      ExplicitLeft = 629
     end
   end
   object Panel5: TPanel
     Left = 0
-    Top = 171
+    Top = 168
     Width = 1016
     Height = 49
     Align = alTop
@@ -889,8 +973,8 @@ object FrmPrincipal: TFrmPrincipal
     end
   end
   object pnCarrinho: TPanel
-    Left = 392
-    Top = 125
+    Left = 291
+    Top = 113
     Width = 317
     Height = 440
     TabOrder = 5
@@ -905,6 +989,7 @@ object FrmPrincipal: TFrmPrincipal
       PanelWidth = 298
       TabOrder = 0
       RowCount = 7
+      OnPaintPanel = cgCarrinhoPaintPanel
       object pnItemCarrinho: TPanel
         Left = 0
         Top = 0
@@ -979,12 +1064,12 @@ object FrmPrincipal: TFrmPrincipal
   end
   object qrVitrine: TFDQuery
     Connection = dmDB.ConDB
-    Left = 278
-    Top = 241
+    Left = 30
+    Top = 401
   end
   object dsVitrine: TDataSource
     DataSet = qrVitrine
-    Left = 336
-    Top = 240
+    Left = 104
+    Top = 400
   end
 end

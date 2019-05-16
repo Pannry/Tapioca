@@ -3,13 +3,13 @@ unit Main;
 interface
 
 uses
-  UsuarioControle, UsuarioLogadoSingleton, Carrinho,
+  UsuarioControle, UsuarioLogadoSingleton, Carrinho, Notificacao,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
   Vcl.DBCGrids, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, LogConcreteObserverSingleton;
 
 type
   TFrmPrincipal = class(TForm)
@@ -42,16 +42,16 @@ type
     btnPerfil: TSpeedButton;
     qrVitrine: TFDQuery;
     Panel8: TPanel;
-    Shape2: TShape;
+    shpFundoPrincipal: TShape;
     lblMainTitulo: TLabel;
     lblMainPreco: TLabel;
     lblMainDesc: TLabel;
     Shape5: TShape;
-    Shape6: TShape;
-    Shape3: TShape;
-    Label9: TLabel;
+    shpFundoLaranja: TShape;
+    shpBordaLateral: TShape;
+    lblAdicionarCarrinho: TLabel;
     dsVitrine: TDataSource;
-    btnAddCarrinho: TShape;
+    btnNotificacao: TShape;
     pnCarrinho: TPanel;
     cgCarrinho: TDBCtrlGrid;
     Voltar: TButton;
@@ -62,6 +62,12 @@ type
     btnRemoveCarrinho: TShape;
     lblProdAddCarrinho: TLabel;
     lblMainQtd: TLabel;
+    Shape9: TShape;
+    btnAddCarrinho: TShape;
+    shpFundoCinza: TShape;
+    lblNotif: TLabel;
+    shpBordaAdicionarCarrinho: TShape;
+    LogNotificacoes: TFrameLogNotificacoes;
     procedure btnCardapioClick(Sender: TObject);
     procedure btnCadastroClick(Sender: TObject);
     procedure btnLoginClick(Sender: TObject);
@@ -71,27 +77,28 @@ type
     procedure btnAdministracaoClick(Sender: TObject);
     procedure btnPerfilClick(Sender: TObject);
     procedure cgVitrinePaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
-    procedure btnAddCarrinhoMouseDown(Sender: TObject; Button: TMouseButton;
+    procedure btnNotificacaoMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure VoltarClick(Sender: TObject);
     procedure btnShowCarrinhoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button2Click(Sender: TObject);
+    procedure btnSolicitarNotificacaoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure cgCarrinhoPaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
   private
     FPermissao: Integer;
     LogedUser: TUsuarioLogadoSingleton;
     Carrinho: TCarrinho;
+    Notificacao: TNotificacao;
   public
     { Public declarations }
+    procedure Refresh();
   end;
 
 var
   FrmPrincipal: TFrmPrincipal;
 
 implementation
-
-{ TODO 0 -oThales -cCardapio: exemplo de cardapios: https://aquilafastfood.com.br/cardapio/ }
-{ TODO 0 -oThales -cCardapio: Basta apenas deixar o carrinho funcional, q está tudo pronto de interface }
 
 uses
   uCardapio, uCrud, uAdm, DM, ProdutoControle;
@@ -103,6 +110,7 @@ begin
   LogedUser := TUsuarioLogadoSingleton.ObterInstancia;
   lblNomeUsuario.Caption := LogedUser.Login;
   FPermissao := LogedUser.Permissao;
+  Notificacao.UsuarioID := LogedUser.Id;
 
   qrVitrine := TProdutoControle.ListarProduto;
   dsVitrine.DataSet := qrVitrine;
@@ -134,12 +142,16 @@ begin
   begin
     btnLogout.Visible := True;
     btnPerfil.Visible := True;
+    LogNotificacoes.Visible := True;
     btnLogin.Visible := False;
+    btnCadastro.Visible := False;
   end
   else
   begin
-    btnLogout.Visible := False;
     btnLogin.Visible := True;
+    btnCadastro.Visible := True;
+    LogNotificacoes.Visible := False;
+    btnLogout.Visible := False;
     btnPerfil.Visible := False;
   end;
 end;
@@ -187,8 +199,10 @@ begin
   UserCtrl := TUsuarioControle.Create;
   try
     UserCtrl.LogoutUsuario;
-    lblNomeUsuario.Caption := LogedUser.Login;
-    FPermissao := LogedUser.Permissao;
+    lblNomeUsuario.Caption := 'Convidado';//LogedUser.Login;
+    FPermissao :=  0;//LogedUser.Permissao;
+    LogNotificacoes.Visible := False;
+    Refresh();
   finally
     UserCtrl.Free;
   end;
@@ -207,14 +221,19 @@ begin
   FPermissao := LogedUser.Permissao;
 end;
 
-procedure TFrmPrincipal.cgVitrinePaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
+procedure TFrmPrincipal.cgCarrinhoPaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
+begin
+  //  Implementação do carrinho
+end;
+
+Procedure TFrmPrincipal.cgVitrinePaintPanel(DBCtrlGrid: TDBCtrlGrid; Index: Integer);
 var
   curr: Currency;
 begin
   if qrVitrine.FieldByName('QUANTIDADE').AsInteger = 0 then
-    Shape3.Brush.Color := clRed
+    shpBordaLateral.Brush.Color := clRed
   else
-    Shape3.Brush.Color := clGreen;
+    shpBordaLateral.Brush.Color := clGreen;
 
   lblMainTitulo.Caption := qrVitrine.FieldByName('NOME').AsString;
   lblMainDesc.Caption  := qrVitrine.FieldByName('DESCRICAO').AsString;
@@ -233,10 +252,54 @@ begin
   end;
 end;
 
-procedure TFrmPrincipal.btnAddCarrinhoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TFrmPrincipal.btnNotificacaoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if FPermissao > 0 then
     ShowMessage('produto adicionado')
+  else
+    ShowMessage('Por favor, realize o login!');
+end;
+
+procedure TFrmPrincipal.btnSolicitarNotificacaoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  UsuarioID: Integer;
+  ProdutoID: Integer;
+  Feedback: string;
+begin
+  if FPermissao > 0 then
+    if (qrVitrine.FieldByName('QUANTIDADE').AsInteger > 0) then
+      ShowMessage('O produto está disponível para compra!')
+    else
+      begin
+        try
+          UsuarioID := LogedUser.Id;
+          ProdutoID := qrVitrine.FieldByName('ID').AsInteger;
+          //Verificando a existencia da solicitacao
+          dmDB.qrNotificacao.Close;
+          dmDB.qrNotificacao.SQL.Text := 'SELECT * FROM NOTIFICACAOPRODUTO WHERE (PRODUTOID = :ProdutoId) and (USUARIOID = :UsuarioId)';
+          dmDB.qrNotificacao.ParamByName('ProdutoId').AsInteger := ProdutoID;
+          dmDB.qrNotificacao.ParamByName('UsuarioId').AsInteger := UsuarioID;
+          dmDB.qrNotificacao.Open;
+          Feedback := dmDB.qrNotificacao.FieldByName('PRODUTOID').AsString;
+          dmDB.qrNotificacao.Close;
+
+          //Se ainda não existe, criá-la
+          if (Feedback.IsEmpty) then
+          begin
+            dmDB.qrNotificacao.SQL.Text := 'INSERT INTO NOTIFICACAOPRODUTO (PRODUTOID, USUARIOID) '+
+                                            'VALUES (:ProdutoId, :UsuarioId)';
+            dmDB.qrNotificacao.ParamByName('ProdutoId').AsInteger := ProdutoID;
+            dmDB.qrNotificacao.ParamByName('UsuarioId').AsInteger := UsuarioID;
+            dmDB.qrNotificacao.ExecSQL;
+          end;
+
+          //Feedback para o usuário
+          ShowMessage('Você será notificado quando o produto estiver disponível!');
+          Refresh();
+        except
+          ShowMessage('Houve um erro inesperado.');
+        end;
+      end
   else
     ShowMessage('Por favor, realize o login!');
 end;
@@ -259,6 +322,48 @@ procedure TFrmPrincipal.Button2Click(Sender: TObject);
 begin
   ShowMessage('Compra realizada!');
   pnCarrinho.Visible := False;
+end;
+
+
+procedure TFrmPrincipal.Refresh;
+var
+  Notif: TNotificacao;
+
+begin
+  //Obtendo novamente os dados do Singleton
+
+  dmDB.qrAdmin.SQL.Text := 'SELECT * FROM USUARIOS WHERE LOGIN = :LoginSQL and SENHA = :SenhaSQL';
+  lblNomeUsuario.Caption := LogedUser.Login;
+  FPermissao := LogedUser.Permissao;
+  Notif.UsuarioID := LogedUser.Id;
+  LogNotificacoes.Atualizar(Notif);
+  if FPermissao = 2 then
+  begin
+    btnAdministracao.Visible := True;
+    btnRelatorios.Visible := True;
+  end
+  else
+  begin
+    btnAdministracao.Visible := False;
+    btnRelatorios.Visible := False;
+  end;
+
+  if (FPermissao = 1) or (FPermissao = 2) then
+  begin
+    btnLogout.Visible := True;
+    btnPerfil.Visible := True;
+    LogNotificacoes.Visible := True;
+    btnLogin.Visible := False;
+    btnCadastro.Visible := False;
+  end
+  else
+  begin
+    btnLogin.Visible := True;
+    btnCadastro.Visible := True;
+    LogNotificacoes.Visible := False;
+    btnLogout.Visible := False;
+    btnPerfil.Visible := False;
+  end;
 end;
 
 end.

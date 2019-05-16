@@ -48,7 +48,7 @@ begin
   dmDB.qrAdmin.Close;
 
   dmDB.qrAdmin.SQL.Text :=
-'UPDATE USUARIOS SET NOME = :nomeSQL, LOGIN = :LoginSQL, SENHA = :senhaSQL, TIPO = :TipoSQL, CPF = :cpfSQL, TELEFONE = :foneSQL WHERE LOGIN = :LoginSQL';
+'UPDATE USUARIOS SET NOME = :nomeSQL, LOGIN = :LoginSQL, SENHA = :senhaSQL, TIPO = :TipoSQL, CPF = :cpfSQL, TELEFONE = :foneSQL WHERE NOME = :nomeSQL';
 
   dmDB.qrAdmin.ParamByName('nomeSQL').AsString := User.Nome;
   dmDB.qrAdmin.ParamByName('LoginSQL').AsString := User.Login;
@@ -101,6 +101,7 @@ begin
 
     UserMakeLogin := TUsuario.Create;
     try
+      UserMakeLogin.Id := dmDB.qrAdmin.FieldByName('ID').AsInteger;
       UserMakeLogin.login := dmDB.qrAdmin.FieldByName('LOGIN').AsString;
       UserMakeLogin.senha := dmDB.qrAdmin.FieldByName('SENHA').AsString;
       UserMakeLogin.nome := dmDB.qrAdmin.FieldByName('NOME').AsString;

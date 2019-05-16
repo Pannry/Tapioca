@@ -8,6 +8,7 @@ type
 
   TUsuario = class
   protected
+    FId: Integer;
     FNome: string;
     FSenha: string;
     FLogin: string;
@@ -15,6 +16,7 @@ type
     FTelefone: string;
     FTipoDeUsuario: Integer;
   public
+    property Id: Integer read FId write FId;
     property Login: string read FLogin write FLogin;
     property Senha: string read FSenha write FSenha;
     property Nome: string read FNome write FNome;

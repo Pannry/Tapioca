@@ -9,6 +9,7 @@ type
   TUsuarioLogadoSingleton = class
   private
     class var
+      FId: Integer;
       FNome: string;
       FPermissao: Integer;
       FLogin: string;
@@ -19,6 +20,7 @@ type
 
       constructor Create;
   public
+    class property Id: Integer read FId write FId;
     class property Nome: string read FNome write Fnome;
     class property Login: string read FLogin write FLogin;
     class property Senha: string read FSenha write FSenha;
@@ -67,6 +69,7 @@ procedure TUsuarioLogadoSingleton.DefinirUsuarioCompleto(UsuarioLogado: TUsuario
 begin
   if UsuarioLogado <> nil then
   begin
+    self.FId := UsuarioLogado.Id;
     self.FLogin := UsuarioLogado.Login;
     self.FSenha := UsuarioLogado.Senha;
     self.Fnome := UsuarioLogado.Nome;

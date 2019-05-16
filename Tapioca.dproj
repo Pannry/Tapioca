@@ -145,6 +145,13 @@
         <DCCReference Include="Modelos\Carrinho.pas"/>
         <DCCReference Include="Controles\CarrinhoControle.pas"/>
         <DCCReference Include="DataAccess\CarrinhoDao.pas"/>
+        <DCCReference Include="Modelos\Notificacao.pas"/>
+        <DCCReference Include="Frames\LogConcreteObserverSingleton.pas">
+            <Form>FrameLogNotificacoes</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Interfaces\IObserver.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
